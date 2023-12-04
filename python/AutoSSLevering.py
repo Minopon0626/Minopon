@@ -98,7 +98,7 @@ def moveAndclick(x, y):
 
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
-    randomMax = 10.0
+    randomMax = 15.0
     randomMin = 5.0
     sleeptime = random.uniform(randomMin, randomMax)
     print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
