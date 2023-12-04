@@ -14,6 +14,8 @@ def leveling(times):
 def Leveling5to2():
     print("   出撃を実行")
 
+
+
     autosortie()
 
     print("   南方海域を選択")
