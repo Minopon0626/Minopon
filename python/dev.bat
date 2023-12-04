@@ -1,0 +1,1 @@
+@cmd /K D:\VScode forder\vscodeWorkspace
