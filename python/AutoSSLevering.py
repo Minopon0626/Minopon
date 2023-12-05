@@ -50,6 +50,8 @@ def Leveling5to2(ship_number):
     time.sleep(30)
     # 戦闘終了
 
+    print("   戦闘終了までの待機時間経過")
+
     # 戦闘結果をクリックして進める
     # 完全勝利Sを消費
     moveAndclick(1150, 200)
@@ -103,6 +105,11 @@ def moveAndclick(x, y):
     randomsleep()
     pyautogui.click()
 
+def sleeplong(times):
+    print("      ")
+    for _ in range(times):
+        print("*", end="", flush=True)
+        times.sleep(10)
 
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
@@ -110,6 +117,7 @@ def randomsleep():
     randomMin = 5.0
     sleeptime = random.uniform(randomMin, randomMax)
     print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
+    print("      ****1****2****3")
 
     for _ in range(int(sleeptime)):  # sleeptime秒間、ループを実行
         print("*", end="", flush=True)  # * を出力し、すぐにフラッシュ（表示）
@@ -118,13 +126,17 @@ def randomsleep():
     print(" 完了")  # 待機終了後に完了メッセージを出力
 
 def repeat_function(times, ship_number):
-    print("実行開始.3秒後までにモニター, ブラウザの準備をしてください")
-    time.sleep(3)
-    for i in range(times):
-        leveling(i + 1, ship_number)  # leveling関数に新しい引数を渡す
-        time.sleep(1)  # 操作間の待機時間（秒単位）
-    autosupply()
-    print(str(times) + "回のレベリングが完了しました")
+    try:
+        print("実行開始.3秒後までにモニター, ブラウザの準備をしてください")
+        time.sleep(3)
+        for i in range(times):
+            leveling(i + 1, ship_number)  # leveling関数に新しい引数を渡す
+            time.sleep(1)  # 操作間の待機時間（秒単位）
+        autosupply()
+        print(str(times) + "回のレベリングが完了しました")
+    except KeyboardInterrupt:
+        print("\n中断されました。現在のレベリング回数: " + str(i + 1))
+        sys.exit(0)
 
 
 if __name__ == "__main__":
