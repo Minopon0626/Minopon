@@ -3,15 +3,15 @@ import pyautogui
 import time
 import random
 
-def leveling(times):
+def leveling(times, ship_number):
     # ここに実行したい操作を記述
     print("レベリング実行回数:" + str(times))
     autosupply()
-    Leveling5to2()
+    Leveling5to2(ship_number)
 
 
 # 5-2自動レベリングの処理内容
-def Leveling5to2():
+def Leveling5to2(ship_number):
     print("   出撃を実行")
 
 
@@ -36,10 +36,18 @@ def Leveling5to2():
     # 戦闘開始(羅針盤)
     moveAndclick(600, 520)
     # 羅針盤回転
+    time.sleep(20)
+
+    if ship_number > 1:
+        print("   艦隊陣形選択")
+        time.sleep(30)
+        # 艦隊が先頭領域に突入
+        moveAndclick(1090, 430)
+        # 艦隊陣形を選択
 
     print("   戦闘終了まで待機中")
     # 渦巻と戦闘それぞれ待機
-    time.sleep(60)
+    time.sleep(30)
     # 戦闘終了
 
     # 戦闘結果をクリックして進める
@@ -109,21 +117,23 @@ def randomsleep():
 
     print(" 完了")  # 待機終了後に完了メッセージを出力
 
-def repeat_function(times):
+def repeat_function(times, ship_number):
     print("実行開始.3秒後までにモニター, ブラウザの準備をしてください")
     time.sleep(3)
     for i in range(times):
-        leveling(i + 1)
+        leveling(i + 1, ship_number)  # leveling関数に新しい引数を渡す
         time.sleep(1)  # 操作間の待機時間（秒単位）
     autosupply()
     print(str(times) + "回のレベリングが完了しました")
 
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:  # 引数が2つ以上あるかチェック
         try:
-            repeat_times = int(sys.argv[1])  # コマンドライン引数から繰り返し回数を取得
-            repeat_function(repeat_times)
-        except ValueError:  #引数が整数でない場合
-            print("引数は整数である必要があります。")
-    else:   #引数が指定されていない場合
-        print("引数に繰り返し回数を指定してください。")
+            repeat_times = int(sys.argv[1])  # 最初の引数を繰り返し回数として取得
+            ship_number = int(sys.argv[2])  # 二番目の引数を取得
+            repeat_function(repeat_times, ship_number)  # repeat_functionに二番目の引数も渡す
+        except ValueError:  # 引数が整数でない場合のエラーハンドリング
+            print("最初の引数は整数である必要があります。")
+    else:  # 必要な引数が指定されていない場合
+        print("引数に繰り返し回数と艦隊の所有艦艇数を指定してください。")
