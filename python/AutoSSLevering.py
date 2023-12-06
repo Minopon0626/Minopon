@@ -2,6 +2,7 @@ import sys
 import pyautogui
 import time
 import random
+import numpy as np
 
 def leveling(times, ship_number):
     # ここに実行したい操作を記述
@@ -111,11 +112,18 @@ def sleeplong(times):
         print("*", end="", flush=True)
         times.sleep(10)
 
+# U字分布を作成
+def generate_u_shaped_random(min_value, max_value):
+    # U字分布に基づく乱数を生成
+    uniform_data = np.random.uniform(0, 1)
+    u_shaped_value = min_value + (max_value - min_value) * np.minimum(uniform_data, 1 - uniform_data)
+    return u_shaped_value
+
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
     randomMax = 15.0
     randomMin = 5.0
-    sleeptime = random.uniform(randomMin, randomMax)
+    sleeptime = generate_u_shaped_random(randomMax, randomMin)
     print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
     print("****1****2****3")
 
