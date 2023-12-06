@@ -117,7 +117,7 @@ def randomsleep():
     randomMin = 5.0
     sleeptime = random.uniform(randomMin, randomMax)
     print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
-    print("      ****1****2****3")
+    print("****1****2****3")
 
     for _ in range(int(sleeptime)):  # sleeptime秒間、ループを実行
         print("*", end="", flush=True)  # * を出力し、すぐにフラッシュ（表示）
