@@ -121,17 +121,22 @@ def generate_u_shaped_random(min_value, max_value):
 
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
-    randomMax = 15.0
+    randomMax = 30.0
     randomMin = 5.0
     sleeptime = generate_u_shaped_random(randomMax, randomMin)
     print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
-    print("****1****2****3")
 
-    for _ in range(int(sleeptime)):  # sleeptime秒間、ループを実行
-        print("*", end="", flush=True)  # * を出力し、すぐにフラッシュ（表示）
+    for _ in range(int(sleeptime), 0, -1):  # sleeptime秒間、ループを実行
+        # print("*", end="", flush=True)  # * を出力し、すぐにフラッシュ（表示）
+        sys.stdout.write("\r残り {:2} 秒".format(sleeptime))  # {:2} は2文字の幅で右寄せを意味します
+        sys.stdout.flush()
         time.sleep(1)  # 1秒待機
 
-    print(" 完了")  # 待機終了後に完了メッセージを出力
+    time.sleep(sleeptime - int(sleeptime))
+
+    # 待機時間終了
+    sys.stdout.write("\r待機終了\n")
+    sys.stdout.flush()
 
 def repeat_function(times, ship_number):
     try:
