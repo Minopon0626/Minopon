@@ -122,26 +122,35 @@ def generate_u_shaped_random(min_value, max_value):
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
     randomMax = 30.0
-    randomMin = 5.0
+    randomMin = 8.0
     sleeptime = generate_u_shaped_random(randomMax, randomMin)
-    print("      行動遅延中:" + str(sleeptime))  # 改行せずに出力を開始
+    print("      行動遅延中:" + str(sleeptime))  # 行動遅延時間を表示
 
-    for _ in range(int(sleeptime), 0, -1):  # sleeptime秒間、ループを実行
-        # print("*", end="", flush=True)  # * を出力し、すぐにフラッシュ（表示）
-        sys.stdout.write("\r残り {:2} 秒".format(sleeptime))  # {:2} は2文字の幅で右寄せを意味します
+    remaining_time = sleeptime
+    while remaining_time > 0:
+        sys.stdout.write("\r      残り {:2} 秒".format(int(remaining_time)))  # 残り時間を表示
         sys.stdout.flush()
-        time.sleep(1)  # 1秒待機
+        time.sleep(1)
+        remaining_time -= 1  # 残り時間を1秒減らす
 
-    time.sleep(sleeptime - int(sleeptime))
-
-    # 待機時間終了
-    sys.stdout.write("\r待機終了\n")
+    sys.stdout.write("\r      待機終了\n")  # 待機時間終了
     sys.stdout.flush()
+
 
 def repeat_function(times, ship_number):
     try:
-        print("実行開始.3秒後までにモニター, ブラウザの準備をしてください")
-        time.sleep(3)
+        print("実行開始。モニター、ブラウザの準備をしてください。3秒後に開始します。")
+
+        remaining_time = 3
+        while remaining_time > 0:
+            sys.stdout.write("\r準備中 {:2} 秒".format(remaining_time))
+            sys.stdout.flush()
+            time.sleep(1)
+            remaining_time -= 1
+
+        sys.stdout.write("\r準備完了        \n")
+        sys.stdout.flush()
+
         for i in range(times):
             leveling(i + 1, ship_number)  # leveling関数に新しい引数を渡す
             time.sleep(1)  # 操作間の待機時間（秒単位）
