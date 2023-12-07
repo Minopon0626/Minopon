@@ -121,7 +121,7 @@ def generate_u_shaped_random(min_value, max_value):
 
 # ランダムな秒数停止する関数:実行ごとに挟んで検知しにくくする
 def randomsleep():
-    randomMax = 30.0
+    randomMax = 15.0
     randomMin = 8.0
     sleeptime = generate_u_shaped_random(randomMax, randomMin)
     print("      行動遅延中:" + str(sleeptime))  # 行動遅延時間を表示
@@ -133,7 +133,7 @@ def randomsleep():
         time.sleep(1)
         remaining_time -= 1  # 残り時間を1秒減らす
 
-    sys.stdout.write("\r      待機終了\n")  # 待機時間終了
+    sys.stdout.write("\r      待機終了        \n")  # 待機時間終了
     sys.stdout.flush()
 
 
