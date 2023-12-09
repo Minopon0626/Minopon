@@ -124,7 +124,6 @@ def randomsleep():
     randomMax = 15.0
     randomMin = 8.0
     sleeptime = generate_u_shaped_random(randomMax, randomMin)
-    print("      行動遅延中:" + str(sleeptime))  # 行動遅延時間を表示
 
     remaining_time = sleeptime
     while remaining_time > 0:
