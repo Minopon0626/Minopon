@@ -5,7 +5,6 @@ import random
 import numpy as np
 
 def leveling(times, ship_number):
-    # ここに実行したい操作を記述
     print("レベリング実行回数:" + str(times))
     autosupply()
     Leveling5to2(ship_number)
@@ -13,13 +12,13 @@ def leveling(times, ship_number):
 
 # 5-2自動レベリングの処理内容
 def Leveling5to2(ship_number):
-    print("   出撃を実行")
+    messagePrint("   出撃を実行")
 
 
 
     autosortie()
 
-    print("   南方海域を選択")
+    messagePrint("   南方海域を選択")
 
     # 海域選択画面から南方海域を選択
     moveAndclick(705, 835)
@@ -40,18 +39,18 @@ def Leveling5to2(ship_number):
     time.sleep(20)
 
     if ship_number > 1:
-        print("   艦隊陣形選択")
+        messagePrint("   艦隊陣形選択")
         time.sleep(30)
         # 艦隊が先頭領域に突入
         moveAndclick(1090, 430)
         # 艦隊陣形を選択
 
-    print("   戦闘終了まで待機中")
+    messagePrint("   戦闘終了まで待機中")
     # 渦巻と戦闘それぞれ待機
     time.sleep(30)
     # 戦闘終了
 
-    print("   戦闘終了までの待機時間経過")
+    messagePrint("   戦闘終了までの待機時間経過")
 
     # 戦闘結果をクリックして進める
     # 完全勝利Sを消費
@@ -62,15 +61,15 @@ def Leveling5to2(ship_number):
     moveAndclick(1150, 200)
     # 次を選択完了
 
-    print("   撤退を選択")
+    messagePrint("   撤退を選択")
     # 撤退を選択
     moveAndclick(760, 520)
     # 撤退を選択完了
-    print("   出撃完了")
+    messagePrint("   出撃完了")
 
 # 母港から海域選択画面までの遷移をする関数
 def autosortie():
-    print("   海域選択画面まで遷移")
+    messagePrint("   海域選択画面まで遷移")
 
     # 母港から出撃を選択
     moveAndclick(300, 550)
@@ -80,11 +79,11 @@ def autosortie():
     moveAndclick(340, 490)
     # 海域選択画面に遷移完了
 
-    print("   海域選択画面まで遷移完了")
+    messagePrint("   海域選択画面まで遷移完了")
 
 # 補給自動化
 def autosupply():
-    print("   補給を実行")
+    messagePrint("   補給を実行")
 
     # 母港から補給画面に遷移
     moveAndclick(110, 480)
@@ -98,7 +97,7 @@ def autosupply():
     moveAndclick(65, 220)
     # 母港に遷移完了
 
-    print("   補給完了")
+    messagePrint("   補給完了")
 
 # 引数にx, y座標をもらい移動した後に一定の遅延を挟みクリックする関数
 def moveAndclick(x, y):
@@ -107,9 +106,9 @@ def moveAndclick(x, y):
     pyautogui.click()
 
 def sleeplong(times):
-    print("      ")
+    messagePrint("      ")
     for _ in range(times):
-        print("*", end="", flush=True)
+        messagePrint("*", end="", flush=True)
         times.sleep(10)
 
 # U字分布を作成
@@ -138,7 +137,7 @@ def randomsleep():
 
 def repeat_function(times, ship_number):
     try:
-        print("実行開始。モニター、ブラウザの準備をしてください。3秒後に開始します。")
+        messagePrint("実行開始。モニター、ブラウザの準備をしてください。3秒後に開始します。")
 
         remaining_time = 3
         while remaining_time > 0:
@@ -159,6 +158,9 @@ def repeat_function(times, ship_number):
         print("\n中断されました。現在のレベリング回数: " + str(i + 1))
         sys.exit(0)
 
+def messagePrint(message):
+    sys.stdout.write(f"\r{message}")
+    sys.stdout.flush
 
 if __name__ == "__main__":
     if len(sys.argv) > 2:  # 引数が2つ以上あるかチェック
@@ -167,6 +169,6 @@ if __name__ == "__main__":
             ship_number = int(sys.argv[2])  # 二番目の引数を取得
             repeat_function(repeat_times, ship_number)  # repeat_functionに二番目の引数も渡す
         except ValueError:  # 引数が整数でない場合のエラーハンドリング
-            print("最初の引数は整数である必要があります。")
+            print("引数は整数である必要があります。")
     else:  # 必要な引数が指定されていない場合
         print("引数に繰り返し回数と艦隊の所有艦艇数を指定してください。")
