@@ -14,8 +14,6 @@ def leveling(times, ship_number):
 def Leveling5to2(ship_number):
     messagePrint("   出撃を実行")
 
-
-
     autosortie()
 
     messagePrint("   南方海域を選択")
@@ -126,27 +124,27 @@ def randomsleep():
 
     remaining_time = sleeptime
     while remaining_time > 0:
-        sys.stdout.write("\r      残り {:2} 秒".format(int(remaining_time)))  # 残り時間を表示
+        sys.stdout.write("      残り {:2} 秒".format(int(remaining_time)))  # 残り時間を表示
         sys.stdout.flush()
         time.sleep(1)
         remaining_time -= 1  # 残り時間を1秒減らす
 
-    sys.stdout.write("\r      待機終了        \n")  # 待機時間終了
+    sys.stdout.write("      待機終了        \n")  # 待機時間終了
     sys.stdout.flush()
 
 
 def repeat_function(times, ship_number):
     try:
-        messagePrint("実行開始。モニター、ブラウザの準備をしてください。3秒後に開始します。")
+        messagePrint("実行開始。モニター、ブラウザの準備をしてください。3秒後に開始します。\n")
 
         remaining_time = 3
         while remaining_time > 0:
-            sys.stdout.write("\r準備中 {:2} 秒".format(remaining_time))
+            sys.stdout.write("準備中 {:2} 秒".format(remaining_time))
             sys.stdout.flush()
             time.sleep(1)
             remaining_time -= 1
 
-        sys.stdout.write("\r準備完了        \n")
+        sys.stdout.write("準備完了        ")
         sys.stdout.flush()
 
         for i in range(times):
