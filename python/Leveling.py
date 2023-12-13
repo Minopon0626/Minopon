@@ -4,13 +4,25 @@ import time
 
 # 引数が一つ必要なものとする
 
+# 初期起動をする
 def startUp():
     # leveling等このプログラムを実行した際に最初に実行される部分
     waitMoniter = 5             # 開始する際にモニター等の待機時間
     for i in range(waitMoniter):
         messagePrint(f"モニターの準備をしてください。{waitMoniter - i}秒後開始します")
         time.sleep(1)
+
     messagePrint("実行完了")
+
+# 引数に停止する時間を入れてとめる
+def sleepTime(times):
+    # times秒だけプログラムを停止と同時に
+    for i in range(times):
+        # メッセージを出力
+        messagePrint(f"{times - i}秒待機")
+        time.sleep(1)           # 1秒待機
+    messagePrint("待機完了")
+
 
 # messageに出力したいものを入れて呼び出すと出力してくれる
 def messagePrint(message):
