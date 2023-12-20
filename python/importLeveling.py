@@ -2,10 +2,10 @@ import importFunction
 import time
 import random
 
-# 係数と少数第N位を引数にとり係数 * 1.5を最低5 ~ 最高10に対して掛け算をし少数第N位まで絞り返す関数
+# 係数と少数第N位を引数にとり係数 * 1.5を最低1 ~ 最高10に対して掛け算をし少数第N位まで絞り返す関数
 def randomNumber(coefficient, n):
     coefficient = coefficient * 1.5
-    randomMin =  5 * coefficient
+    randomMin =  1
     randomMax = 10 * coefficient
     # RandomMin ~ RandomMaxまでの少数を生成
     randomNumber = random.uniform(randomMax, randomMin)
