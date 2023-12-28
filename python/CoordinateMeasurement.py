@@ -1,6 +1,7 @@
 import pyautogui
 import time
 
+print("5秒後のマウス位置を取得します")
 # ユーザーがマウスを動かして位置を確認できるように少し待機
 time.sleep(5)
 
