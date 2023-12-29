@@ -1,6 +1,13 @@
 import sys
 import pyautogui
 
+"""
+使い方
+    まずファイルの先頭にimport importFunctionをつける
+    使用したい関数を使う場合
+        importFunction.使用したい関数名()
+"""
+
 # messageを引数に取り標準出力を書き換えながら表示していく関数
 def messagePrint(message):
     # メッセージを受け取ってパディングする

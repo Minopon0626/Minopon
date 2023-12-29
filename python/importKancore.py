@@ -2,6 +2,14 @@ import importFunction
 import time
 import random
 
+"""
+実装:
+
+追加予定
+    母港に戻る（左上クリック）
+    編成を開く
+"""
+
 # 係数と少数第N位を引数にとり係数 * 1.5を最低1 ~ 最高10に対して掛け算をし少数第N位まで絞り返す関数
 def randomNumber(coefficient, n):
     coefficient = coefficient * 1.5
@@ -35,3 +43,22 @@ def RandomSleepAndmoveAndclick(x, y, coefficient, n):
         sleepFunction(RemainingTime)
     # 待機が完了したので移動とクリックを行う
     importFunction.moveAndclick(x, y)
+
+
+# 補給をする関数
+def autosupply():
+    importFunction.messagePrint("   補給を実行")
+
+    # 母港から補給画面に遷移
+    importFunction.moveAndclick(110, 480)
+    # 補給画面に遷移完了
+
+    # 補給画面から全補給
+    importFunction.moveAndclick(175, 340)
+    # 全補給完了
+
+    # 補給画面から母港に遷移
+    importFunction.moveAndclick(65, 220)
+    # 母港に遷移完了
+
+    importFunction.messagePrint("   補給完了")
