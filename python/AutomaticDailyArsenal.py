@@ -1,4 +1,6 @@
 import pyautogui
+import importFunction
+import importKancore
 
 """
 前提
@@ -6,6 +8,7 @@ import pyautogui
     2.プログラムを実行してから秘書艦の艦種, 開発レシピを指定させる
     3.任務を受注する
     4.開発→建造→開発*3→建造*3を行う
+    5.すでに受けている任務は一度すべてキャンセルする
 予定
     1.必要な情報を受け取る
         1.秘書艦のタイプ
@@ -38,9 +41,10 @@ import pyautogui
         4.一番上の船を選択
         5.母港にもどる
     3.任務を受注する
-        1.任務をクリックする
-        2.指定された位置の任務を受注する
-        3.母港に戻る
+        1.任務をキャンセルする
+        2.任務をクリックする
+        3.指定された位置の任務を受注する
+        4.母港に戻る
     4.開発を行う
     5.任務
     6.建造
@@ -50,4 +54,35 @@ import pyautogui
     10.建造*3
     11.任務
 """
+# 変数宣言
+secretaryShipType = -1  #秘書艦のタイプ
+developmentRecipe = -1  #開発レシピ
+buildingRecipe    = -1  #建造レシピ
+largeBuildCount   = -1  #大型建造の回数
+largeBuildRecipe  = [-1, -1, -1, -1]  #大型建造のレシピ
 
+# 必要な情報を受け取る
+# 秘書艦の設定
+secretaryShipType = -1  # 秘書艦のタイプ
+
+# ユーザー入力を受け付け、条件を満たすまで繰り返す
+while secretaryShipType < 0 or secretaryShipType > 8:
+    try:
+        secretaryShipType = int(input("秘書艦の艦種を指定してください。\nBB = 0, CV = 1, CA = 2, CL = 3, DD = 5, DE = 6, SS = 7, AV = 8\n入力: "))
+        if secretaryShipType < 0 or secretaryShipType > 8:
+            print("\n無効な入力です。0から8の範囲で入力してください。\n")
+    except ValueError:
+        # 数字以外が入力された場合のエラーメッセージ
+        print("\n数値を入力してください。\n")
+# 入力結果確認
+# print(f"\nあなたが選んだ秘書艦の艦種は {secretaryShipType} です。")
+
+# 開発レシピの決定
+while developmentRecipe < 0 or developmentRecipe > 8:
+    try:
+        developmentRecipe = int(input("開発レシピを決定してください\n入力: "))
+        if developmentRecipe < 0 or developmentRecipe > 8:
+            print("\n無効な入力です。0から8の範囲で入力してください。\n")
+    except ValueError:
+        # 数字以外が入力された場合のエラーメッセージ
+        print("\n数値を入力してください。\n")
