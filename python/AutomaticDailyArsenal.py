@@ -56,11 +56,19 @@ import importKancore
 """
 # 変数宣言
 secretaryShipType = -1  #秘書艦のタイプ
-developmentRecipe = -1  #開発レシピ
+developmentRecipe = -1  #開発レシピ番号
 buildingRecipe    = -1  #建造レシピ
 largeBuildCount   = -1  #大型建造の回数
 largeBuildRecipe  = [-1, -1, -1, -1]  #大型建造のレシピ
 
+
+"""
+FFFFFFF U   U NN   NN CCCC TTTTTTTT IIIII OOOOO  NN   NN
+FF      U   U NNN  NN C       TT      I   OO   OO NNN  NN
+FFFFF   U   U NN N NN C       TT      I   OO   OO NN N NN
+FF      U   U NN  NNN C       TT      I   OO   OO NN  NNN
+FF       UUU  NN   NN CCCC    TT    IIIII  OOOOO  NN   NN
+"""
 
 def selectSecretaryShip():
     """
@@ -79,6 +87,7 @@ def selectSecretaryShip():
 
 def readDevelopmentRecipe(secretaryShipType):
     """
+    開発レシピ用
     指定された秘書艦タイプに基づいて開発レシピを含むファイルを読み込む関数
     """
     fileName = f"developmentRecipeFile/developmentRecipeFile{secretaryShipType}.txt"
@@ -90,20 +99,57 @@ def readDevelopmentRecipe(secretaryShipType):
                 print(line.strip())
     except FileNotFoundError:
         print(f"ファイル {fileName} は存在しません。")
-        return False  # ファイルが見つからなかった場合はFalseを返す
+        return # ファイルが見つからなかった場合はFalseを返す
+
+def receiveNumber(upper_limit):
+    """
+    ユーザーから指定された上限値までの数字の入力を受け付けるプログラム。
+    有効な数字が入力されると、その数字を返す。
+
+    :param upper_limit: 許可される数字の上限値
+    """
+    while True:  # 無限ループを使用して入力を繰り返す
+        user_input = input(f"0から{upper_limit}の数字を入力してください: ")
+        if user_input.isdigit() and 0 <= int(user_input) <= upper_limit:  # 入力が 0 から upper_limit の数字かどうかをチェック
+            return int(user_input)  # 有効な数字の場合はその数字を返す
+        else:
+            print(f"0から{upper_limit}の数字で入力してください")  # 不正な入力の場合はメッセージを表示
 
 
-#M       M   AAAAA   IIIII  N   N
-#MM     MM  A     A    I    NN  N
-#M M   M M  AAAAAA    I    N N N
-#M  M M  M  A     A   I    N  NN
-#M   M   M  A     A  IIIII  N   N
+def countDataSetsInFile(fileIndex):
+    """
+    開発レシピ用
+    指定された番号のファイルが何個のデータ(=レシピ)を持っているかを確認する関数
+    """
+    fileName = f"developmentRecipeFile/developmentRecipeFile{fileIndex}.txt"
+    count = 0
 
+    try:
+        with open(fileName, 'r') as file:
+            for line in file:
+                count += 1
+        return count
+    except FileNotFoundError:
+        print(f"ファイル {fileName} は存在しません。")
+        return 0
+
+
+"""
+M       M   AAAAA   IIIII  N   N
+MM     MM  A     A    I    NN  N
+M M   M M  AAAAAA    I    N N N
+M  M M  M  A     A   I    N  NN
+M   M   M  A     A  IIIII  N   N
+"""
 
 # メインプログラム
-while True:
-    # 秘書艦を決定する
-    secretaryShipType = selectSecretaryShip()
-    # 開発レシピを決定する
-    if readDevelopmentRecipe(secretaryShipType):
-        break  # ファイルが正常に読み込まれたらループを抜ける
+
+# 秘書艦を決定する
+secretaryShipType = selectSecretaryShip()
+# 開発レシピを決定する
+    # 開発レシピを表示する
+readDevelopmentRecipe(secretaryShipType)
+    # 開発レシピの入力を受け付ける
+developmentRecipe = receiveNumber(countDataSetsInFile(secretaryShipType) - 1)
+
+# 大型建造の有無及び回数を聞く
