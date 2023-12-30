@@ -61,28 +61,49 @@ buildingRecipe    = -1  #建造レシピ
 largeBuildCount   = -1  #大型建造の回数
 largeBuildRecipe  = [-1, -1, -1, -1]  #大型建造のレシピ
 
-# 必要な情報を受け取る
-# 秘書艦の設定
-secretaryShipType = -1  # 秘書艦のタイプ
 
-# ユーザー入力を受け付け、条件を満たすまで繰り返す
-while secretaryShipType < 0 or secretaryShipType > 8:
-    try:
-        secretaryShipType = int(input("秘書艦の艦種を指定してください。\nBB = 0, CV = 1, CA = 2, CL = 3, DD = 5, DE = 6, SS = 7, AV = 8\n入力: "))
-        if secretaryShipType < 0 or secretaryShipType > 8:
-            print("\n無効な入力です。0から8の範囲で入力してください。\n")
-    except ValueError:
-        # 数字以外が入力された場合のエラーメッセージ
-        print("\n数値を入力してください。\n")
-# 入力結果確認
-# print(f"\nあなたが選んだ秘書艦の艦種は {secretaryShipType} です。")
+def selectSecretaryShip():
+    """
+    ユーザーに秘書艦のタイプを選択させ、適切な入力があるまで繰り返す関数
+    """
+    while True:
+        try:
+            secretaryShipType = int(input("秘書艦の艦種を指定してください。\nBB = 0, CV = 1, CA = 2, CL = 3, DD = 5, DE = 6, SS = 7, AV = 8\n入力: "))
+            if 0 <= secretaryShipType <= 8:
+                return secretaryShipType
+            else:
+                print("\n無効な入力です。0から8の範囲で入力してください。\n")
+        except ValueError:
+            # 数字以外が入力された場合のエラーメッセージ
+            print("\n数値を入力してください。\n")
 
-# 開発レシピの決定
-while developmentRecipe < 0 or developmentRecipe > 8:
+def readDevelopmentRecipe(secretaryShipType):
+    """
+    指定された秘書艦タイプに基づいて開発レシピを含むファイルを読み込む関数
+    """
+    fileName = f"developmentRecipeFile/developmentRecipeFile{secretaryShipType}.txt"
     try:
-        developmentRecipe = int(input("開発レシピを決定してください\n入力: "))
-        if developmentRecipe < 0 or developmentRecipe > 8:
-            print("\n無効な入力です。0から8の範囲で入力してください。\n")
-    except ValueError:
-        # 数字以外が入力された場合のエラーメッセージ
-        print("\n数値を入力してください。\n")
+        with open(fileName, 'r') as file:
+            print(f"ファイル {fileName} の内容:")
+            for line in file:
+                # データセットごとに改行して出力
+                print(line.strip())
+    except FileNotFoundError:
+        print(f"ファイル {fileName} は存在しません。")
+        return False  # ファイルが見つからなかった場合はFalseを返す
+
+
+#M       M   AAAAA   IIIII  N   N
+#MM     MM  A     A    I    NN  N
+#M M   M M  AAAAAA    I    N N N
+#M  M M  M  A     A   I    N  NN
+#M   M   M  A     A  IIIII  N   N
+
+
+# メインプログラム
+while True:
+    # 秘書艦を決定する
+    secretaryShipType = selectSecretaryShip()
+    # 開発レシピを決定する
+    if readDevelopmentRecipe(secretaryShipType):
+        break  # ファイルが正常に読み込まれたらループを抜ける
