@@ -60,6 +60,9 @@ developmentRecipe = -1  #開発レシピ番号
 buildingRecipe    = -1  #建造レシピ
 largeBuildCount   = -1  #大型建造の回数
 largeBuildRecipe  = [-1, -1, -1, -1]  #大型建造のレシピ
+# 大型建造時のレシピ説明
+descriptions = ["the first number", "the second number", "the third number", "the fourth number"]
+
 
 
 """
@@ -133,12 +136,33 @@ def countDataSetsInFile(fileIndex):
         print(f"ファイル {fileName} は存在しません。")
         return 0
 
+# 数字が4桁で下2桁が0かどうかをチェックする関数
+def isValidInput(inputValue):
+    return len(inputValue) == 4 and inputValue.isdigit() and inputValue.endswith("00")
+
+# 大型建造のレシピを入力させる関数
+def largeBuildRecipeAsk():
+    for i in range(4):
+        while True:
+            userInput = input(f" {descriptions[i]}の使用量を決定してください: ")
+            if isValidInput(userInput):
+                largeBuildRecipe[i] = int(userInput)
+                break
+            else:
+                print("不正な値です")
+
+def PrintAll():
+    print(f"秘書艦の艦種  :{secretaryShipType}")
+    print(f"開発レシピ    :{developmentRecipe}")
+    print(f"大型建造の回数:{largeBuildCount}")
+    print(f"大型建造のレシピ:{largeBuildRecipe}")
+
 
 """
-M       M   AAAAA   IIIII  N   N
-MM     MM  A     A    I    NN  N
-M M   M M  AAAAAA    I    N N N
-M  M M  M  A     A   I    N  NN
+M       M   AAAA    IIIII  N   N
+MM     MM   A  A      I    NN  N
+M M   M M  AAAAAA     I    N N N
+M  M M  M  A     A    I    N  NN
 M   M   M  A     A  IIIII  N   N
 """
 
@@ -153,3 +177,9 @@ readDevelopmentRecipe(secretaryShipType)
 developmentRecipe = receiveNumber(countDataSetsInFile(secretaryShipType) - 1)
 
 # 大型建造の有無及び回数を聞く
+print("大型建造の回数を入力してください")
+largeBuildCount = receiveNumber(4)
+
+if largeBuildCount >= 1:
+    # 大型建造を行う場合
+    largeBuildRecipeAsk()
