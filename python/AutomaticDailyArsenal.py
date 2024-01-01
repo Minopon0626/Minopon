@@ -1,7 +1,3 @@
-import pyautogui
-import importFunction
-import importKancore
-
 """
 前提
     1.母港画面から開始
@@ -54,135 +50,111 @@ import importKancore
     10.建造*3
     11.任務
 """
+import pyautogui
+import importFunction
+import importKancore
+
 # 以下の変数はプログラム全体で使用されるため、グローバル変数として宣言
-global secretary_ship_type
-global development_recipe
-global building_recipe
-global large_build_count
-global large_build_recipe
+global secretaryShipType
+global developmentRecipe
+global buildingRecipe
+global largeBuildCount
+global largeBuildRecipe
 
 # 変数全てに初期値-1を代入する
-secretary_ship_type = -1
-development_recipe = -1
-building_recipe = -1
-large_build_count = -1
-large_build_recipe = -1
+secretaryShipType = -1
+developmentRecipe = -1
+buildingRecipe = -1
+largeBuildCount = -1
+largeBuildRecipe = -1
 
-# 秘書艦のタイプを選択する関数
-def select_secretary_ship():
+def selectSecretaryShip():
     """
     ユーザーに秘書艦のタイプを選択させる。
     正しい入力が得られるまで繰り返す。
     """
     while True:
         try:
-            ship_type = int(input("秘書艦の艦種を指定してください。\nBB = 0, CV = 1, CA = 2, CL = 3, DD = 5, DE = 6, SS = 7, AV = 8\n入力: "))
-            if 0 <= ship_type <= 8:
-                return ship_type
+            shipType = int(input("秘書艦の艦種を指定してください。\nBB = 0, CV = 1, CA = 2, CL = 3, DD = 5, DE = 6, SS = 7, AV = 8\n入力: "))
+            if 0 <= shipType <= 8:
+                return shipType
             else:
                 print("\n無効な入力です。0から8の範囲で入力してください。\n")
         except ValueError:
             print("\n数値を入力してください。\n")
 
-# 指定された秘書艦タイプに基づいて開発レシピを含むファイルを読み込む関数
-def read_development_recipe(ship_type):
+def readDevelopmentRecipe(shipType):
     """
     指定された秘書艦タイプに基づいて開発レシピを含むファイルを読み込む。
     """
-    file_name = f"developmentRecipeFile/developmentRecipeFile{ship_type}.txt"
+    fileName = f"developmentRecipeFile/developmentRecipeFile{shipType}.txt"
     try:
-        with open(file_name, 'r') as file:
-            print(f"ファイル {file_name} の内容（コメント除外）:")
+        with open(fileName, 'r') as file:
+            print(f"ファイル {fileName} の内容（コメント除外）:")
             for line in file:
                 if not line.strip().startswith('#'):
                     print(line.strip())
     except FileNotFoundError:
-        print(f"ファイル {file_name} は存在しません。")
+        print(f"ファイル {fileName} は存在しません。")
 
-# ユーザーからの数値入力を受け付ける関数
-def receive_number(upper_limit):
+def receiveNumber(upperLimit):
     """
     ユーザーから指定された上限値までの数字の入力を受け付ける。
     """
     while True:
-        user_input = input(f"0から{upper_limit}の数字を入力してください: ")
-        if user_input.isdigit() and 0 <= int(user_input) <= upper_limit:
-            return int(user_input)
+        userInput = input(f"0から{upperLimit}の数字を入力してください: ")
+        if userInput.isdigit() and 0 <= int(userInput) <= upperLimit:
+            return int(userInput)
         else:
-            print(f"0から{upper_limit}の数字で入力してください。")
+            print(f"0から{upperLimit}の数字で入力してください。")
 
-# 指定されたファイルのデータ数をカウントする関数
-def count_data_in_file(file_index, file_type):
+def countDataInFile(fileIndex, fileType):
     """
     指定されたタイプのファイルが持っているデータ数をカウントする。
     """
-    file_name = ""
-    if file_type == 0:
-        file_name = f"developmentRecipeFile/developmentRecipeFile{file_index}.txt"
-    elif file_type == 1:
-        file_name = f"buildingRecipe/{file_index}"
-    elif file_type == 2:
-        file_name = f"largeConstructionRecipe/largeConstructionRecipe{file_index}.txt"
+    fileName = ""
+    if fileType == 0:
+        fileName = f"developmentRecipeFile/developmentRecipeFile{fileIndex}.txt"
+    elif fileType == 1:
+        fileName = f"buildingRecipe/{fileIndex}"
+    elif fileType == 2:
+        fileName = f"largeConstructionRecipe/largeConstructionRecipe{fileIndex}.txt"
     else:
         print("不正なファイルタイプが指定されました。")
         return 0
 
     count = 0
     try:
-        with open(file_name, 'r') as file:
+        with open(fileName, 'r') as file:
             for line in file:
                 if not line.startswith('#'):
                     count += 1
         return count
     except FileNotFoundError:
-        print(f"ファイル {file_name} は存在しません。")
+        print(f"ファイル {fileName} は存在しません。")
         return 0
 
-# 数字が4桁で下2桁が0かどうかをチェックする関数
-def is_valid_input(input_value):
-    return len(input_value) == 4 and input_value.isdigit() and input_value.endswith("00")
-
-# 大型建造のレシピを入力させる関数
-def large_build_recipe_ask():
-    descriptions = ["the first number", "the second number", "the third number", "the fourth number"]
-    large_build_recipe = []
-    for i in range(4):
-        while True:
-            user_input = input(f"{descriptions[i]}の使用量を決定してください: ")
-            if is_valid_input(user_input):
-                large_build_recipe.append(int(user_input))
-                break
-            else:
-                print("不正な値です。")
-    return large_build_recipe
-
-# メインプログラム
 def main():
-    global secretary_ship_type, development_recipe, large_build_count, large_build_recipe
+    global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe
 
     # 秘書艦を決定
-    secretary_ship_type = select_secretary_ship()
+    secretaryShipType = selectSecretaryShip()
 
     # 開発レシピを決定
-    read_development_recipe(secretary_ship_type)
-    development_recipe = receive_number(count_data_in_file(secretary_ship_type, 0) - 1)
+    readDevelopmentRecipe(secretaryShipType)
+    developmentRecipe = receiveNumber(countDataInFile(secretaryShipType, 0) - 1)
 
     # 大型建造の有無及び回数を決定
     print("大型建造の回数を入力してください")
-    large_build_count = receive_number(4)
+    largeBuildCount = receiveNumber(4)
 
     # 大型建造を行う場合はレシピを聞く
-    if large_build_count >= 1:
-        large_build_recipe = large_build_recipe_ask()
-
-    print("秘書艦の艦種  :", secretary_ship_type)
-    print("開発レシピ    :", development_recipe)
-    print("大型建造の回数:", large_build_count)
-    print("大型建造のレシピ:", large_build_recipe)
-    print("end")
+    if largeBuildCount >= 1:
+        print("noLargeBuild")
 
 if __name__ == "__main__":
     main()
+
 
 # 通常の建造レシピを表示, 聞く
 
