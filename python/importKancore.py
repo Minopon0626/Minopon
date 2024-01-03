@@ -59,7 +59,6 @@ def randomSleepAndMoveAndClick(x, y, coefficient, n, actionDescription):
 
     # 実行が完了したことを表示し、改行
     importFunction.messagePrint(f"{actionDescription}が完了しました\n")
-    # print("\n")
 
     # 指定された座標でクリック
     importFunction.moveAndClick(x, y)

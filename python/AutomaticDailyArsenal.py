@@ -53,6 +53,7 @@
 import pyautogui
 import importFunction
 import importKancore
+import time
 
 # 以下の変数はプログラム全体で使用されるため、グローバル変数として宣言
 global secretaryShipType
@@ -192,6 +193,35 @@ def secretaryShipAppointment(shipType):
     # 母港に戻る
     importKancore.ReturnHomePort()
 
+# 建造スロットを指定してそこをクリックする関数
+def buildingSlotClick(slotNumber):
+    """
+    建造スロットをクリックする
+    slotNumber = 上から順に番号を振ってクリックするスロット選択(最初は0)
+    """
+    x = 930
+    if slotNumber == 0:
+        y = 430
+    elif slotNumber == 1:
+        y = 540
+    elif slotNumber == 2:
+        y = 660
+    else:
+        y = 790
+    importKancore.randomSleepAndMoveAndClick(x, y, 0.3, 2, f"{slotNumber}番建造スロットを選択")
+    # 獲得画面待機
+    time.sleep(5)
+    # 獲得画面スキップ
+    importKancore.randomSleepAndMoveAndClick(315, 300, 0.5, 2, "画面スキップのクリック")
+
+
+def cleanBuiledingSlot():
+    """
+    建造スロットすべてを開放していく。
+    """
+    for slotNumber in range(4):
+        buildingSlotClick(slotNumber)
+
 def main():
     global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe, buildingRecipe
 
@@ -218,6 +248,13 @@ def main():
 
     # 秘書艦を任命する
     secretaryShipAppointment(secretaryShipType)
+
+    # 工廠を開くまで一度時間を置く
+    time.sleep(2)
+
+    importKancore.randomSleepAndMoveAndClick(410, 700, 0.2, 2, "工廠をクリック")
+    # 建造スロットをすべて空にする
+    cleanBuiledingSlot()
 
 # 任務を受注する
 
