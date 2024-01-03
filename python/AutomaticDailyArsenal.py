@@ -83,19 +83,36 @@ def selectSecretaryShip():
         except ValueError:
             print("\n数値を入力してください。\n")
 
-def readDevelopmentRecipe(shipType):
+def readDevelopmentRecipe(fileIndex, fileType):
     """
-    指定された秘書艦タイプに基づいて開発レシピを含むファイルを読み込む。
+    指定された秘書艦タイプに基づいてレシピを含むファイルを読み込む。
+    fileType
+        0 = 開発
+        1 = 建造
+        2 = 大型建造
     """
-    fileName = f"developmentRecipeFile/developmentRecipeFile{shipType}.txt"
+    fileName = ""
+    if fileType == 0:
+        fileName = f"developmentRecipeFile/developmentRecipeFile{fileIndex}.txt"
+    elif fileType == 1:
+        fileName = f"buildingRecipe/0.txt"
+    elif fileType == 2:
+        fileName = f"buildingRecipe/1.txt"
+    else:
+        print("不正なファイルタイプが指定されました。")
+        return 0
+
     try:
-        with open(fileName, 'r') as file:
+        with open(fileName, 'r', encoding='utf-8') as file:  # ここで 'utf-8' エンコーディングを指定する
             print(f"ファイル {fileName} の内容（コメント除外）:")
             for line in file:
                 if not line.strip().startswith('#'):
                     print(line.strip())
     except FileNotFoundError:
         print(f"ファイル {fileName} は存在しません。")
+    except UnicodeDecodeError as e:
+        print(f"ファイルの読み込み中にUnicodeDecodeErrorが発生しました: {e}")
+
 
 def receiveNumber(upperLimit):
     """
@@ -116,18 +133,16 @@ def countDataInFile(fileIndex, fileType):
     if fileType == 0:
         fileName = f"developmentRecipeFile/developmentRecipeFile{fileIndex}.txt"
     elif fileType == 1:
-        # fileName = f"buildingRecipe/{fileIndex}"
-        fileName = f"buildingRecipe/0"
+        fileName = f"buildingRecipe/0.txt"
     elif fileType == 2:
-        # fileName = f"largeConstructionRecipe/largeConstructionRecipe{fileIndex}.txt"
-        fileName = f"buildingRecipe/1"
+        fileName = f"buildingRecipe/1.txt"
     else:
         print("不正なファイルタイプが指定されました。")
         return 0
 
     count = 0
     try:
-        with open(fileName, 'r') as file:
+        with open(fileName, 'r', encoding='utf-8') as file:  # 'utf-8' エンコーディングを指定
             for line in file:
                 if not line.startswith('#'):
                     count += 1
@@ -135,15 +150,19 @@ def countDataInFile(fileIndex, fileType):
     except FileNotFoundError:
         print(f"ファイル {fileName} は存在しません。")
         return 0
+    except UnicodeDecodeError as e:
+        print(f"ファイルの読み込み中にUnicodeDecodeErrorが発生しました: {e}")
+        return 0
+
 
 def main():
-    global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe
+    global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe, buildingRecipe
 
     # 秘書艦を決定
     secretaryShipType = selectSecretaryShip()
 
     # 開発レシピを決定
-    readDevelopmentRecipe(secretaryShipType)
+    readDevelopmentRecipe(secretaryShipType, 0)
     developmentRecipe = receiveNumber(countDataInFile(secretaryShipType, 0) - 1)
 
     # 大型建造の有無及び回数を決定
@@ -152,14 +171,13 @@ def main():
 
     # 大型建造を行う場合はレシピを聞く
     if largeBuildCount >= 1:
-        print("noLargeBuild")
+        readDevelopmentRecipe(secretaryShipType, 2)
+        largeBuildRecipe = receiveNumber(countDataInFile(secretaryShipType, 2) - 1)
 
-if __name__ == "__main__":
-    main()
-
-# 大型建造レシピ部分から開始
-
-# 通常の建造レシピを表示, 聞く
+    # 通常の建造レシピを表示, 聞く
+    print("通常建造の回数を入力してください")
+    readDevelopmentRecipe(secretaryShipType, 1)
+    buildingRecipe = receiveNumber(countDataInFile(secretaryShipType, 1) - 1)
 
 # 秘書艦を任命する
 
@@ -180,3 +198,8 @@ if __name__ == "__main__":
 # 建造3を行う
 
 # 任務を受注する
+
+
+# cmdから起動時の処理
+if __name__ == "__main__":
+    main()
