@@ -116,9 +116,11 @@ def countDataInFile(fileIndex, fileType):
     if fileType == 0:
         fileName = f"developmentRecipeFile/developmentRecipeFile{fileIndex}.txt"
     elif fileType == 1:
-        fileName = f"buildingRecipe/{fileIndex}"
+        # fileName = f"buildingRecipe/{fileIndex}"
+        fileName = f"buildingRecipe/0"
     elif fileType == 2:
-        fileName = f"largeConstructionRecipe/largeConstructionRecipe{fileIndex}.txt"
+        # fileName = f"largeConstructionRecipe/largeConstructionRecipe{fileIndex}.txt"
+        fileName = f"buildingRecipe/1"
     else:
         print("不正なファイルタイプが指定されました。")
         return 0
