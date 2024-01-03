@@ -154,6 +154,43 @@ def countDataInFile(fileIndex, fileType):
         print(f"ファイルの読み込み中にUnicodeDecodeErrorが発生しました: {e}")
         return 0
 
+# 秘書艦を任命する関数
+def secretaryShipAppointment(shipType):
+    """
+    秘書艦を任命する関数, 母港画面からスタートする前提
+    shipType:秘書艦にする艦種
+    """
+    # 母港画面から編成をクリック
+    importKancore.randomSleepAndMoveAndClick(300, 360, 0.2, 2, "編成をクリック")
+    # 編成画面から旗艦の変更ボタンをクリック
+    importKancore.randomSleepAndMoveAndClick(615, 475, 0.2, 2, "旗艦を変更")
+    # 表示艦種をすべてオフに
+    importKancore.randomSleepAndMoveAndClick(1130, 320, 0.2, 2, "表示艦種をすべてオンに")
+    importKancore.randomSleepAndMoveAndClick(1130, 320, 0.2, 2, "表示艦種をすべてオフに")
+    # 艦種部分をクリック
+    if shipType == 0:
+        x, y = 630, 320
+    elif shipType == 1:
+        x, y = 700, 320
+    elif shipType == 2:
+        x, y = 760, 320
+    elif shipType == 3:
+        x, y = 820, 320
+    elif shipType == 4:
+        x, y = 890, 320
+    elif shipType == 5:
+        x, y = 950, 320
+    elif shipType == 6:
+        x, y = 1020, 320
+    else:  # shipTypeが他の値の場合、最後の座標を使用
+        x, y = 1080, 320
+    importKancore.randomSleepAndMoveAndClick(x, y, 0.2, 2, "艦種を表示")
+    # 最も上の艦娘を選択
+    importKancore.randomSleepAndMoveAndClick(750, 400, 0.2, 2, "一番上の艦娘を選択")
+    # 選択
+    importKancore.randomSleepAndMoveAndClick(1030, 830, 0.3, 2, "艦娘を選択")
+    # 母港に戻る
+    importKancore.ReturnHomePort()
 
 def main():
     global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe, buildingRecipe
@@ -179,7 +216,8 @@ def main():
     readDevelopmentRecipe(secretaryShipType, 1)
     buildingRecipe = receiveNumber(countDataInFile(secretaryShipType, 1) - 1)
 
-# 秘書艦を任命する
+    # 秘書艦を任命する
+    secretaryShipAppointment(secretaryShipType)
 
 # 任務を受注する
 
