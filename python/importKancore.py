@@ -63,5 +63,33 @@ def randomSleepAndMoveAndClick(x, y, coefficient, n, actionDescription):
     # 指定された座標でクリック
     importFunction.moveAndClick(x, y)
 
-# 例: X=100, Y=200の座標で、係数1.0、小数点以下2桁でランダムな時間待機してクリック
-# randomSleepAndMoveAndClick(100, 200, 1.0, 2, 補給)
+    # 例: X=100, Y=200の座標で、係数1.0、小数点以下2桁でランダムな時間待機してクリック
+    # randomSleepAndMoveAndClick(100, 200, 1.0, 2, 補給)
+
+def missionClick(missionNumber):
+    """
+    任務画面から指定された番号の任務をクリックする
+    missionNumberに基づいて処理を実行する関数。
+    まず、missionNumberを5で割った商に基づいて処理Aを実行し、
+    次に余りに基づいて処理0、1、2、3、または4を実行する。
+
+    Args:
+    missionNumber (int): 処理を決定するための数値
+    """
+
+    # 5で割った商だけ処理Aを実行
+    for _ in range(missionNumber // 5):
+        randomSleepAndMoveAndClick(930, 860, 0.1, 2, "任務ページを変更")
+
+    # 5で割った余りに基づいて処理B, C, D, E, Fのいずれかを実行
+    remainder = missionNumber % 5
+    if remainder == 0:
+        randomSleepAndMoveAndClick(520, 370, 0.2, 2, "任務を受注")
+    elif remainder == 1:
+        randomSleepAndMoveAndClick(520, 470, 0.2, 2, "任務を受注")
+    elif remainder == 2:
+        randomSleepAndMoveAndClick(520, 570, 0.2, 2, "任務を受注")
+    elif remainder == 3:
+        randomSleepAndMoveAndClick(520, 670, 0.2, 2, "任務を受注")
+    else:
+        randomSleepAndMoveAndClick(520, 770, 0.2, 2, "任務を受注")

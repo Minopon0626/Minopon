@@ -69,6 +69,14 @@ buildingRecipe = -1
 largeBuildCount = -1
 largeBuildRecipe = -1
 
+"""
+FFFFFFF U   U NN   NN CCCC TTTTTTTT IIIII OOOOO  NN   NN
+FF      U   U NNN  NN C       TT      I   OO   OO NNN  NN
+FFFFF   U   U NN N NN C       TT      I   OO   OO NN N NN
+FF      U   U NN  NNN C       TT      I   OO   OO NN  NNN
+FF       UUU  NN   NN CCCC    TT    IIIII  OOOOO  NN   NN
+"""
+
 def selectSecretaryShip():
     """
     ユーザーに秘書艦のタイプを選択させる。
@@ -221,6 +229,15 @@ def cleanBuiledingSlot():
     """
     for slotNumber in range(4):
         buildingSlotClick(slotNumber)
+
+
+"""
+M       M   AAA   IIIII  N   N
+MM     MM  A   A    I    NN  N
+M M   M M  AAAAA    I    N N N
+M  M M  M  A   A    I    N  NN
+M   M   M  A   A  IIIII  N   N
+"""
 
 def main():
     global secretaryShipType, developmentRecipe, largeBuildCount, largeBuildRecipe, buildingRecipe
