@@ -92,13 +92,18 @@ def selectSecretaryShip():
         except ValueError:
             print("\n数値を入力してください。\n")
 
-def readDevelopmentRecipe(fileIndex, fileType):
+def readDevelopmentRecipe(fileIndex, fileType, lineNumbers=None):
     """
-    指定された秘書艦タイプに基づいてレシピを含むファイルを読み込む。
-    fileType
-        0 = 開発
-        1 = 建造
-        2 = 大型建造
+    指定された秘書艦タイプに基づいてレシピを含むファイルを読み込み、指定された行があればそれを返し、
+    なければ全行を表示する。
+
+    Parameters:
+    fileIndex (int): ファイルインデックス。
+    fileType (int): ファイルタイプ（0 = 開発、1 = 建造、2 = 大型建造）。
+    lineNumbers (list of int, optional): 読み込みたい行番号のリスト。デフォルトは None で、この場合全行が表示される。
+
+    Returns:
+    list or None: 指定された行の内容を含むリスト、または lineNumbers が None の場合は None。
     """
     fileName = ""
     if fileType == 0:
@@ -109,18 +114,29 @@ def readDevelopmentRecipe(fileIndex, fileType):
         fileName = f"buildingRecipe/1.txt"
     else:
         print("不正なファイルタイプが指定されました。")
-        return 0
+        return None
 
     try:
-        with open(fileName, 'r', encoding='utf-8') as file:  # ここで 'utf-8' エンコーディングを指定する
-            print(f"ファイル {fileName} の内容（コメント除外）:")
-            for line in file:
-                if not line.strip().startswith('#'):
-                    print(line.strip())
+        with open(fileName, 'r', encoding='utf-8') as file:
+            if lineNumbers is None:
+                print(f"ファイル {fileName} の全内容:")
+                for line in file:
+                    if not line.strip().startswith('#'):
+                        print(line.strip())
+                return None
+            else:
+                specificLines = []
+                for i, line in enumerate(file, 1):  # 行番号を 1 から開始
+                    if i in lineNumbers and not line.strip().startswith('#'):
+                        specificLines.append(line.strip().split(','))  # 行をカンマで分割し、リストに追加
+                return specificLines
     except FileNotFoundError:
         print(f"ファイル {fileName} は存在しません。")
+        return None
     except UnicodeDecodeError as e:
         print(f"ファイルの読み込み中にUnicodeDecodeErrorが発生しました: {e}")
+        return None
+
 
 
 def receiveNumber(upperLimit):
@@ -230,6 +246,14 @@ def cleanBuiledingSlot():
     for slotNumber in range(4):
         buildingSlotClick(slotNumber)
 
+def developmentSelect():
+    """
+    工廠画面から開発をクリックする。
+    その後渡されたレシピ番号に従いレシピを設定する
+    """
+    # 340, 660
+    importKancore.randomSleepAndMoveAndClick(340, 660, 0.2, 2, "開発をクリック")
+    developmentRecipe
 
 """
 M       M   AAA   IIIII  N   N
@@ -266,14 +290,30 @@ def main():
     # 秘書艦を任命する
     secretaryShipAppointment(secretaryShipType)
 
+    # 母港から任務画面に移動する
+    importKancore.randomSleepAndMoveAndClick(850, 230, 0.4, 2, "任務画面に移動")
+    importKancore.randomSleepAndMoveAndClick(315, 300, 0.5, 2, "画面スキップのクリック")
+
+    # 遂行中任務に切り替え
+    importKancore.missionSolt(1)
+    # 任務を受注する前にすでに受注している任務を消す
+    for _ in range(7):
+        # すでに受注している任務を7回クリックする（要は全消し）
+        importKancore.missionClick(0)
+
+    # デイリー工廠任務を受注
+    importKancore.missionSolt(2, 3)
+    importKancore.missionClick(0)
+
+    # 母港に戻る
+    importKancore.ReturnHomePort()
+
     # 工廠を開くまで一度時間を置く
     time.sleep(2)
 
     importKancore.randomSleepAndMoveAndClick(410, 700, 0.2, 2, "工廠をクリック")
     # 建造スロットをすべて空にする
     cleanBuiledingSlot()
-
-# 任務を受注する
 
 # 開発を行う
 

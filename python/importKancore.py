@@ -93,3 +93,13 @@ def missionClick(missionNumber):
         randomSleepAndMoveAndClick(520, 670, 0.2, 2, "任務を受注")
     else:
         randomSleepAndMoveAndClick(520, 770, 0.2, 2, "任務を受注")
+
+def missionSolt(missionDisplay, missionType=0):
+    """
+    missionDisplay = デイリーやウィークリーなど
+    missionType    = 表示内容を切り替える, デフォルトは0で全表示
+    """
+    randomSleepAndMoveAndClick(90, (360 + (40 * missionDisplay)), 0.2, 2, f"表示内容を{missionDisplay}番に変更")
+
+    if missionType != 0:
+        randomSleepAndMoveAndClick((730 + (missionType * 100)), 285, 0.1, 2, f"表示を{missionType}番に変更")
