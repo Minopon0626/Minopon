@@ -1,0 +1,27 @@
+{
+    "name": "poi_plugin_auto_daily",
+    "version": "1.0.0",
+    "description": "poi側からの入力をwebsocketで発信する",
+    "main": "src/index.js",
+    "scripts": {
+      "build": "webpack",
+      "test": "jest"
+    },
+    "author": "Your Name <your.email@example.com>",
+    "license": "MIT",
+    "dependencies": {
+      "react": "^17.0.1"
+    },
+    "devDependencies": {
+      "webpack": "^5.3.2",
+      "jest": "^26.6.3"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/yourusername/poi-plugin-example.git"
+    },
+    "keywords": ["poi", "plugin", "example"],
+    "bugs": {
+      "url": "https://github.com/yourusername/poi-plugin-example/issues"
+    }
+}
