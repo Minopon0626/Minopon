@@ -21,7 +21,7 @@ def main(q):
 
     display_time_dict(time_dict)
 
-    print('システム終了')
+    q.put('システム終了')
     q.put(None)
     return 0
 
@@ -30,7 +30,23 @@ def sub(q):
         message = q.get()  # キューからメッセージを取得
         if message is None:  # Noneが送られてきたらループを抜ける
             break
+
+        clear_console()
+
         print(message)
+        time.sleep(1)
+
+def clear_console():
+    """
+    コンソールの出力をクリアする関数。
+    OSに応じて適切なコマンドを実行します。
+    """
+    # Windowsの場合
+    if os.name == 'nt':
+        os.system('cls')
+    # MacOSやLinuxの場合
+    else:
+        os.system('clear')
 
 def subdirectory_file_name_get():
     """
@@ -57,11 +73,11 @@ def display_time_dict(time_dict):
     辞書の内容を表示する関数
     """
     if time_dict:
-        print("ID and Time Pairs:")
+        q.put("ID and Time Pairs:")
         for id_key, time_value in time_dict.items():
-            print(f'ID: {id_key}, Time: {time_value}')
+            q.put(f'ID: {id_key}, Time: {time_value}')
     else:
-        print("The dictionary is empty.")
+        q.put("The dictionary is empty.")
 
 def move_and_click(x, y):
     """
