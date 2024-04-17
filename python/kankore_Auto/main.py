@@ -1,109 +1,61 @@
-import os
-import pyautogui
 import threading
 import queue
 import time
-
-subdirectory_path = os.path.join(os.getcwd(), 'time_of_an_expedition')
-
-time_dict = {}
+import os
+import sys
 
 # キューの作成
-q = queue.Queue()
+message_queue = queue.Queue()
 
-def main(q):
-    q.put('システム開始')  # キューにメッセージを追加
-
-    file_names = subdirectory_file_name_get()  # ファイル名のリストを取得
-
-    for file_name in file_names:  # リスト内の各ファイル名に対して関数を実行
-        extract_id(os.path.join(subdirectory_path, file_name), time_dict)
-
-    display_time_dict(time_dict)
-
-    q.put('システム終了')
-    q.put(None)
-    return 0
-
-def sub(q):
-    while True:
-        message = q.get()  # キューからメッセージを取得
-        if message is None:  # Noneが送られてきたらループを抜ける
-            break
-
-        clear_console()
-
-        print(message)
-        time.sleep(1)
-
+# コンソールをクリアする関数
 def clear_console():
-    """
-    コンソールの出力をクリアする関数。
-    OSに応じて適切なコマンドを実行します。
-    """
-    # Windowsの場合
-    if os.name == 'nt':
+    if os.name == 'nt':  # Windowsの場合
         os.system('cls')
-    # MacOSやLinuxの場合
-    else:
+    else:  # Linux / Mac の場合
         os.system('clear')
 
-def subdirectory_file_name_get():
-    """
-    サブディレクトリ内のファイル名を取得する関数
-    """
-    file_names = [f for f in os.listdir(subdirectory_path) if os.path.isfile(os.path.join(subdirectory_path, f))]
-    return file_names
+# print_and_clearスレッドが実行する関数
+def print_and_clear():
+    last_message = None  # この関数内で最後のメッセージを保持
+    while True:
+        if not message_queue.empty():
+            # 既存の表示内容を削除
+            clear_console()
+            # キューからメッセージを1つ取得し表示
+            last_message = message_queue.get()
+            print(last_message)
+            message_queue.task_done()
+            time.sleep(1)  # 表示を見やすくするために少し待つ
+        else:
+            # キューが空の場合、最後に表示したメッセージを再表示
+            if last_message is not None:
+                clear_console()
+                print("キューが空です。最後のメッセージを再表示します:")
+                print(last_message)
+            time.sleep(1)  # 次のチェックまで少し待つ
 
-def extract_id(file_name, time_dict):
-    """
-    ファイルからIDと時間のペアを抽出して辞書に追加する関数
-    """
-    with open(file_name, 'r', encoding='utf-8') as file:
-        for line in file:
-            # 行をスペースで分割して、IDと時間のペアを抽出
-            parts = line.strip().split()
-            if parts:  # 空行は無視する
-                id_part = parts[0].rstrip(',')  # 最初の要素はID、末尾のコンマを取り除く
-                time_part = parts[-1]  # 最後の要素は時間
-                time_dict[id_part] = time_part  # 辞書に追加
+# inputスレッドが実行する関数
+def input_thread():
+    while True:
+        user_input = input("入力してください: ")
+        message_queue.put(user_input)
 
-def display_time_dict(time_dict):
-    """
-    辞書の内容を表示する関数
-    """
-    if time_dict:
-        q.put("ID and Time Pairs:")
-        for id_key, time_value in time_dict.items():
-            q.put(f'ID: {id_key}, Time: {time_value}')
-    else:
-        q.put("The dictionary is empty.")
+# mainスレッドが実行する関数
+def main_thread():
+    while True:
+        time.sleep(10)  # 何かしらのメイン処理を想定
+        message_queue.put("メイン処理を実行中...\n")
+        message_queue.put("A")
+        message_queue.put("B")
+        message_queue.put("C")
+        message_queue.put("メイン処理が完了しました。\n")
+        # ここにメインの処理を追加する
 
-def move_and_click(x, y):
-    """
-    マウスカーソルを指定の座標に移動してクリックする関数
-    """
-    pyautogui.moveTo(x, y, duration=0.5)  # 移動
-    pyautogui.click()  # クリック
+# スレッドの作成と開始
+print_and_clear_thread = threading.Thread(target=print_and_clear, daemon=True)
+input_thread = threading.Thread(target=input_thread, daemon=True)
 
-def back_to_port():
-    """
-    母港に戻るボタンの座標 x = 100, y = 200
-    """
+print_and_clear_thread.start()
+input_thread.start()
 
-def finish_expeditionary():
-    """
-    遠征を受取画面に移動 x = 1100, y = 200
-    遠征を受取る, 母港に戻る x = 1100, y = 200
-    """
-
-if __name__ == "__main__":
-    # サブスレッドでsub関数を実行
-    sub_thread = threading.Thread(target=sub, args=(q,))
-
-    # サブスレッドの開始
-    sub_thread.start()
-    main(q)
-    # サブスレッドの終了を待つ
-    sub_thread.join()
-
+main_thread()  # メインスレッドの処理を実行
