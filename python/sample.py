@@ -66,4 +66,9 @@ def main():
         display_process.terminate()
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     main()
+=======
+    main()
+    print("プログラムが終了しました。")
+>>>>>>> a69740cab5403456a2d87d2dfa7a2439494e3325
