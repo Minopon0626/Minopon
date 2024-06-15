@@ -1,0 +1,42 @@
+import threading
+import time
+
+# 自作したプログラムをインポートする
+import custom_print
+
+# タイマーの残り時間を保存する辞書
+timer_remaining = {}
+
+# タイマーのカウントダウンを行う関数
+def timer_function(timer_id, duration):
+    global timer_remaining
+
+    remaining_time = duration
+    while remaining_time > 0:
+        # 残り時間を辞書に保存
+        timer_remaining[timer_id] = remaining_time
+        # 残り時間を表示
+        print(f"Timer {timer_id}: {remaining_time} seconds remaining")
+        time.sleep(1)
+        remaining_time -= 1
+
+    # タイマーが終了した場合の処理
+    timer_remaining[timer_id] = 0
+    print(f"Timer {timer_id} finished")
+
+# タイマーを開始する関数
+def start_timers(durations):
+    threads = []
+    for timer_id, duration in durations.items():
+        # 各タイマーごとにスレッドを作成して開始
+        thread = threading.Thread(target=timer_function, args=(timer_id, duration))
+        threads.append(thread)
+        thread.start()
+
+    # 全てのスレッドが終了するまで待機
+    for thread in threads:
+        thread.join()
+
+# 使用例: 各タイマーの時間を設定して開始
+durations = {1: 10, 2: 15, 3: 20}
+start_timers(durations)
