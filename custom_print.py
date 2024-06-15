@@ -34,6 +34,7 @@ def custom_print(line1_str, line2_str, line3_str):
         RESET = '\033[0m'
 
         def colorize_text(text, color, char_to_color):
+            # この関数やや時間がかかります
             """
             特定の文字だけ色を変える関数。
             Args:
