@@ -2,28 +2,29 @@ import sys
 
 def start_custom_print():
     """
-    cutom_print関数を利用するうえで3行分の改行が必要なのでそれを行う関数
+    cutom_print関数を利用するうえで4行分の改行が必要なのでそれを行う関数
     """
-    sys.stdout.write('\n' * 3)  # 3行分の改行を挟む
+    sys.stdout.write('\n' * 4)  # 4行分の改行を挟む
 
-def custom_print(line1_str, line2_str, line3_str):
+def custom_print(line1_str, line2_str, line3_str, line4_str):
     """
-    最新の3行の内容を指定された文字列で書き換える関数。
-    いずれかの行に"/return"が含まれている場合、更新作業を行わずに3行分の改行のみを行う。
+    最新の4行の内容を指定された文字列で書き換える関数。
+    いずれかの行に"/return"が含まれている場合、更新作業を行わずに4行分の改行のみを行う。
     Args:
-    line1_str (str): 最新の3行のうち最も古い行の内容に書き換える文字列。
-    line2_str (str): 最新の3行のうち2番目に古い行の内容に書き換える文字列。
-    line3_str (str): 最新の3行のうち最も新しい行の内容に書き換える文字列。
+    line1_str (str): 最新の4行のうち最も古い行の内容に書き換える文字列。
+    line2_str (str): 最新の4行のうち2番目に古い行の内容に書き換える文字列。
+    line3_str (str): 最新の4行のうち3番目に古い行の内容に書き換える文字列。
+    line4_str (str): 最新の4行のうち最も新しい行の内容に書き換える文字列。
     """
     # 標準出力をフラッシュしてすべてのデータが書き込まれるようにする
     sys.stdout.flush()
 
     # 改行フラグをチェック
-    if "/return" in [line1_str, line2_str, line3_str]:
-        sys.stdout.write('\n' * 3)  # 3行分の改行を挟む
+    if "/return" in [line1_str, line2_str, line3_str, line4_str]:
+        sys.stdout.write('\n' * 4)  # 4行分の改行を挟む
     else:
-        # 最新の3行を指定された内容で書き換えるために、カーソルを3行分上に移動
-        for _ in range(3):
+        # 最新の4行を指定された内容で書き換えるために、カーソルを4行分上に移動
+        for _ in range(4):
             sys.stdout.write('\x1b[1A')  # カーソルを一行上に移動
             sys.stdout.write('\x1b[2K')  # 行をクリア
 
@@ -56,6 +57,7 @@ def custom_print(line1_str, line2_str, line3_str):
         sys.stdout.write(line1_str + '\n')
         sys.stdout.write(line2_str + '\n')
         sys.stdout.write(line3_str + '\n')
+        sys.stdout.write(line4_str + '\n')
 
 # 例としての使用方法
 if __name__ == "__main__":
@@ -63,21 +65,21 @@ if __name__ == "__main__":
 
     start_custom_print()
     time.sleep(1)
-    custom_print("5", "-----", "5秒後に改行します")
+    custom_print("5", "-----", "5秒後に改行します", "Line 1")
     time.sleep(1)
-    # 最新の3行を新しい内容に置き換える
-    custom_print("4", "*----", "4秒後に改行します")
+    # 最新の4行を新しい内容に置き換える
+    custom_print("4", "*----", "4秒後に改行します", "Line 2")
     time.sleep(1)  # 1秒間待機
-    custom_print("3", "**---", "3秒後に改行します")
+    custom_print("3", "**---", "3秒後に改行します", "Line 3")
     time.sleep(1)  # 1秒間待機
-    custom_print("2", "***--", "2秒後に改行します")
+    custom_print("2", "***--", "2秒後に改行します", "Line 4")
     time.sleep(1)  # 1秒間待機
-    custom_print("1", "****-", "1秒後に改行します")
+    custom_print("1", "****-", "1秒後に改行します", "Line 5")
     time.sleep(1)  # 1秒間待機
-    custom_print("0", "*****", "0秒後に改行します")
+    custom_print("0", "*****", "0秒後に改行します", "Line 6")
     time.sleep(1)  # 1秒間待機
     # 改行を含むケースのテスト
     time.sleep(1)  # 1秒間待機
-    custom_print("Line 5", "/return", "Line 6")
+    custom_print("Line 5", "/return", "Line 6", "Line 7")
     time.sleep(1)  # 1秒間待機
-    custom_print("改行", "完了", "しました")
+    custom_print("改行", "完了", "しました", "Line 7")
