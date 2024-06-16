@@ -4,16 +4,27 @@ import timer
 
 # タイマー終了時に呼び出されるコールバック関数
 def timer_finished(timer_id):
-    # print(f"Timer {timer_id} finished!")
-    # ここに各タイマーが終了したときの処理を追加
+    # タイマーが終了したときの処理を追加
     if timer_id == 1:
-        print("Timer 1 has completed its countdown.")
+        # print("タイマー 1 のカウントダウンが完了しました。タイマーをリセットします。")
+        # 特定の処理をここで実行
+        # ...
+        # タイマーをリセット
+        timer.start_timer(1, durations[1], timer_finished)
     elif timer_id == 2:
-        print("Timer 2 has completed its countdown.")
+        # print("タイマー 2 のカウントダウンが完了しました。タイマーをリセットします。")
+        # 特定の処理をここで実行
+        # ...
+        # タイマーをリセット
+        timer.start_timer(2, durations[2], timer_finished)
     elif timer_id == 3:
-        print("Timer 3 has completed its countdown.")
+        # print("タイマー 3 のカウントダウンが完了しました。タイマーをリセットします。")
+        # 特定の処理をここで実行
+        # ...
+        # タイマーをリセット
+        timer.start_timer(3, durations[3], timer_finished)
 
 # 使用例: 各タイマーの時間を設定して開始
-durations = {1: 10, 2: 15, 3: 20}
+durations = {1: 100, 2: 150, 3: 200}
 custom_print.start_custom_print()
 timer.start_timers(durations, timer_finished)
