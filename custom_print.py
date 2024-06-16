@@ -1,6 +1,6 @@
 import sys
 
-def start_cutom_print():
+def start_custom_print():
     """
     cutom_print関数を利用するうえで3行分の改行が必要なのでそれを行う関数
     """
@@ -61,7 +61,7 @@ def custom_print(line1_str, line2_str, line3_str):
 if __name__ == "__main__":
     import time
 
-    start_cutom_print()
+    start_custom_print()
     time.sleep(1)
     custom_print("5", "-----", "5秒後に改行します")
     time.sleep(1)
