@@ -1,7 +1,7 @@
 import threading
 import time
-
 import custom_print
+from mouse_position import get_mouse_position
 
 # タイマーの残り時間を保存する辞書
 timer_remaining = {}
@@ -32,10 +32,12 @@ def start_timers(durations, callback):
 
     while any(thread.is_alive() for thread in threads):
         # 残り時間を表示（custom_printを使用）
+        mouse_x, mouse_y = get_mouse_position()
         line1 = f"Timer 1: {timer_remaining.get(1, 0)} seconds remaining"
         line2 = f"Timer 2: {timer_remaining.get(2, 0)} seconds remaining"
         line3 = f"Timer 3: {timer_remaining.get(3, 0)} seconds remaining"
-        custom_print.custom_print(line1, line2, line3)
+        line4 = f"Mouse Position: ({mouse_x}, {mouse_y})"
+        custom_print.custom_print(line1, line2, line3, line4)
         time.sleep(1)
 
     # 全てのスレッドが終了するまで待機
