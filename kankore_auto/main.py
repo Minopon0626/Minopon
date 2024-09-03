@@ -62,12 +62,8 @@ class InfoApp:
         self.stop_button.config(state="normal")
         self.update_display(current_task="アクション中")
         
-        # 10秒待機後に pyautogui のアクションを実行し、その後タイマーを開始
-        self.root.after(10000, self.execute_actions_and_start_timer)
-
-    def execute_actions_and_start_timer(self):
-        perform_actions()  # pyautogui アクションを実行
-        self.timer.start_timer()
+        perform_actions()  # pyautogui アクションを即座に実行
+        self.timer.start_timer()  # タイマーを即座に開始
 
     def stop_action(self):
         self.timer.stop_timer()
