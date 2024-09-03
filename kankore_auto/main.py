@@ -1,4 +1,6 @@
 import tkinter as tk
+from start_action import start_action
+from stop_action import stop_action
 
 class InfoApp:
     def __init__(self, root):
@@ -63,20 +65,10 @@ class InfoApp:
         self.stop_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
     def start_action(self):
-        # 新しい表示内容を設定（例として固定値を使用）
-        self.update_display(current_task="更新された表示内容A", next_time="更新された表示内容B", next_click="更新された表示内容C")
-
-        # 「スタート」ボタンを無効にし、「ストップ」ボタンを有効にする
-        self.start_button.config(state=tk.DISABLED)
-        self.stop_button.config(state=tk.NORMAL)
+        start_action(self)  # 別ファイルからインポートした関数を呼び出す
 
     def stop_action(self):
-        # 表示内容を元に戻す（例として元の値を設定）
-        self.update_display(current_task="表示内容A", next_time="表示内容B", next_click="表示内容C")
-
-        # 「スタート」ボタンを有効にし、「ストップ」ボタンを無効にする
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
+        stop_action(self)  # 別ファイルからインポートした関数を呼び出す
 
     def update_display(self, current_task=None, next_time=None, next_click=None):
         # 表示内容を更新する
