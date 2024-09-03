@@ -1,6 +1,7 @@
 import tkinter as tk
 from start_action import start_action
 from stop_action import stop_action
+from timer import Timer
 
 class InfoApp:
     def __init__(self, root):
@@ -43,6 +44,9 @@ class InfoApp:
         self.root.grid_rowconfigure(3, weight=1)
         self.root.grid_rowconfigure(4, weight=1)
 
+        # タイマー関連のフラグと変数
+        self.timer = Timer(self)  # タイマーオブジェクトの作成
+
     def create_table_row(self, label_text, value_text):
         # 1列目はグレーの背景、2列目は白の背景
         label_frame = tk.Frame(self.root, bg="lightgray", padx=10, pady=5, borderwidth=1, relief="solid")
@@ -65,10 +69,14 @@ class InfoApp:
         self.stop_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
     def start_action(self):
-        start_action(self)  # 別ファイルからインポートした関数を呼び出す
+        self.start_button.config(state="disabled")  # スタートボタンを無効にする
+        self.stop_button.config(state="normal")  # ストップボタンを有効にする
+        self.timer.start_timer()  # タイマーを開始
 
     def stop_action(self):
-        stop_action(self)  # 別ファイルからインポートした関数を呼び出す
+        self.timer.stop_timer()  # タイマーを停止
+        self.start_button.config(state="normal")  # スタートボタンを再度有効にする
+        self.stop_button.config(state="disabled")  # ストップボタンを無効にする
 
     def update_display(self, current_task=None, next_time=None, next_click=None):
         # 表示内容を更新する

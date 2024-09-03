@@ -2,19 +2,20 @@ import time
 import threading
 
 def start_action(app):
-    # 3時間30分のタイマーをスタート
+    # スタートボタンが押された際に10秒の待機時間
+    app.update_display(current_task="アクション中")
+    app.root.after(10000, lambda: start_timer(app))  # 10秒後にタイマーを開始
+
+def start_timer(app):
+    # 10秒待機した後にタイマーをスタート
     app.end_time = time.time() + (3 * 3600 + 30 * 60)
-    app.update_display(next_time="3時間30分")
+    app.update_display(current_task="タイマー待機中", next_time="3時間30分")
 
     # タイマーを定期的に更新するスレッドを開始
     if not hasattr(app, 'timer_thread') or not app.timer_thread.is_alive():
         app.timer_thread = threading.Thread(target=update_timer, args=(app,))
         app.timer_thread.daemon = True  # スレッドがバックグラウンドで動作するようにする
         app.timer_thread.start()
-
-    # 「スタート」ボタンを無効にし、「ストップ」ボタンを有効にする
-    app.start_button.config(state="disabled")
-    app.stop_button.config(state="normal")
 
 def update_timer(app):
     while time.time() < app.end_time:

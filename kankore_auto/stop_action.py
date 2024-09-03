@@ -1,7 +1,5 @@
 def stop_action(app):
-    # 表示内容を元に戻す（例として元の値を設定）
-    app.update_display(current_task="表示内容A", next_time="表示内容B", next_click="表示内容C")
-
-    # 「スタート」ボタンを有効にし、「ストップ」ボタンを無効にする
-    app.start_button.config(state="normal")
-    app.stop_button.config(state="disabled")
+    # タイマーを停止する処理（ここではシンプルな例として表示のみ）
+    app.update_display(current_task="タイマー停止中", next_time="タイマー停止")
+    app.start_button.config(state="normal")  # スタートボタンを再度有効にする
+    app.stop_button.config(state="disabled")  # ストップボタンを無効にする
