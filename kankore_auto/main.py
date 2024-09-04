@@ -3,8 +3,8 @@ from start_action import start_action
 from stop_action import stop_action
 from timer import Timer
 from pyautogui_actions import perform_actions  # pyautogui操作をインポート
-from ammo_action import ammo_action  # 新しく作成したammo_actionをインポート
-from bauxite_action import bauxite_action  # 新しく作成したbauxite_actionをインポート
+from ammo_action import ammo_action  # ammo_actionをインポート
+from bauxite_action import bauxite_action  # bauxite_actionをインポート
 
 class InfoApp:
     def __init__(self, root):
