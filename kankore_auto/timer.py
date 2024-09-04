@@ -16,8 +16,8 @@ class Timer:
         self._start_timer()
 
     def _start_timer(self):
-        self.end_time = time.time() + (3 * 3600 + 30 * 60)
-        self.app.update_display(current_task="タイマー待機中", next_time="3時間30分")
+        self.end_time = time.time() + (3 * 3600 + 20 * 60)
+        self.app.update_display(current_task="タイマー待機中", next_time="3時間20分")
 
         # タイマーを定期的に更新するスレッドを開始
         self.timer_running = True

@@ -1,4 +1,7 @@
 import pyautogui
+"""
+startの際に呼び出されるマウスの移動について
+"""
 
 def perform_actions():
     # pyautoguiを使用したアクションの例

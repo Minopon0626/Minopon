@@ -8,8 +8,8 @@ def start_action(app):
 
 def start_timer(app):
     # タイマーをスタート
-    app.end_time = time.time() + (3 * 3600 + 30 * 60)
-    app.update_display(current_task="タイマー待機中", next_time="3時間30分")
+    app.end_time = time.time() + (3 * 3600 + 20 * 60)
+    app.update_display(current_task="タイマー待機中", next_time="3時間20分")
 
     # タイマーを定期的に更新するスレッドを開始
     if not hasattr(app, 'timer_thread') or not app.timer_thread.is_alive():
