@@ -3,6 +3,7 @@ from start_action import start_action
 from stop_action import stop_action
 from timer import Timer
 from pyautogui_actions import perform_actions  # pyautogui操作をインポート
+from ammo_action import ammo_action  # 新しく作成したammo_actionをインポート
 
 class InfoApp:
     def __init__(self, root):
@@ -59,7 +60,7 @@ class InfoApp:
         self.stop_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
         # 新しいボタンの追加
-        self.ammo_button = tk.Button(self.root, text="弾薬", command=self.expedition_action)
+        self.ammo_button = tk.Button(self.root, text="弾薬", command=lambda: ammo_action(self))
         self.ammo_button.grid(row=4, column=0, padx=5, pady=5, sticky="ew")
 
         self.bauxite_button = tk.Button(self.root, text="ボーキ", command=self.bauxite_action)
@@ -77,10 +78,6 @@ class InfoApp:
         self.timer.stop_timer()
         self.start_button.config(state="normal")
         self.stop_button.config(state="disabled")
-
-    def expedition_action(self):
-        # 弾薬ボタンがクリックされたときの処理を記述
-        self.update_display(current_task="弾薬実行中")
 
     def bauxite_action(self):
         # ボーキボタンがクリックされたときの処理を記述
