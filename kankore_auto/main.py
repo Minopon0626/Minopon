@@ -8,7 +8,7 @@ class InfoApp:
     def __init__(self, root):
         self.root = root
         self.root.title("情報表示アプリ")
-        self.root.geometry("400x350")
+        self.root.geometry("400x400")  # ウィンドウの高さを少し増やしました
         self.root.configure(bg="lightgray")
 
         self.current_task_text = "表示内容A"
@@ -36,6 +36,7 @@ class InfoApp:
         self.root.grid_rowconfigure(2, weight=1)
         self.root.grid_rowconfigure(3, weight=1)
         self.root.grid_rowconfigure(4, weight=1)
+        self.root.grid_rowconfigure(5, weight=1)  # 新しいボタンの行を設定
 
         self.timer = Timer(self)
 
@@ -51,11 +52,18 @@ class InfoApp:
         return label_frame, value_frame
 
     def create_buttons(self):
-        self.start_button = tk.Button(self.root, text="スタート", command=self.start_action)
+        self.start_button = tk.Button(self.root, text="遠征スタート", command=self.start_action)
         self.start_button.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
 
-        self.stop_button = tk.Button(self.root, text="ストップ", command=self.stop_action, state=tk.DISABLED)
+        self.stop_button = tk.Button(self.root, text="タイマーストップ", command=self.stop_action, state=tk.DISABLED)
         self.stop_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
+
+        # 新しいボタンの追加
+        self.ammo_button = tk.Button(self.root, text="弾薬", command=self.expedition_action)
+        self.ammo_button.grid(row=4, column=0, padx=5, pady=5, sticky="ew")
+
+        self.bauxite_button = tk.Button(self.root, text="ボーキ", command=self.bauxite_action)
+        self.bauxite_button.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
 
     def start_action(self):
         self.start_button.config(state="disabled")
@@ -69,6 +77,14 @@ class InfoApp:
         self.timer.stop_timer()
         self.start_button.config(state="normal")
         self.stop_button.config(state="disabled")
+
+    def expedition_action(self):
+        # 弾薬ボタンがクリックされたときの処理を記述
+        self.update_display(current_task="弾薬実行中")
+
+    def bauxite_action(self):
+        # ボーキボタンがクリックされたときの処理を記述
+        self.update_display(current_task="ボーキ実行中")
 
     def update_display(self, current_task=None, next_time=None, next_click=None):
         if current_task is not None:

@@ -2,12 +2,12 @@ import time
 import threading
 
 def start_action(app):
-    # スタートボタンが押された際に10秒の待機時間
+    # スタートボタンが押された際にタイマーを即座に開始
     app.update_display(current_task="アクション中")
-    app.root.after(10000, lambda: start_timer(app))  # 10秒後にタイマーを開始
+    start_timer(app)  # 10秒の遅延を取り除き、即座にタイマーを開始
 
 def start_timer(app):
-    # 10秒待機した後にタイマーをスタート
+    # タイマーをスタート
     app.end_time = time.time() + (3 * 3600 + 30 * 60)
     app.update_display(current_task="タイマー待機中", next_time="3時間30分")
 

@@ -12,9 +12,8 @@ class Timer:
         if self.timer_running:
             return  # タイマーがすでに動作している場合は何もしない
         
-        # 10秒待機した後にタイマーをスタート
-        self.app.update_display(current_task="アクション中")
-        self.app.root.after(10000, self._start_timer)
+        # タイマーを即座に開始
+        self._start_timer()
 
     def _start_timer(self):
         self.end_time = time.time() + (3 * 3600 + 30 * 60)
