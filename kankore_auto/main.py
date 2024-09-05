@@ -2,7 +2,7 @@ import tkinter as tk
 from start_action import start_action
 from stop_action import stop_action
 from timer import Timer
-from pyautogui_actions import perform_actions_a, perform_actions_b, perform_actions_c, expedition_receive  # pyautoguiの動作をインポート
+from pyautogui_actions import perform_actions_a, perform_actions_b, perform_actions_c, expedition_receive, open_formation, supply  # pyautoguiの動作をインポート
 from ammo_action import ammo_action  # ammo_actionをインポート
 from bauxite_action import bauxite_action  # bauxite_actionをインポート
 

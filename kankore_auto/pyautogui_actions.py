@@ -46,3 +46,38 @@ def expedition_receive(app):
     pyautogui.click(x=1100, y=230)
     time.sleep(5)
     pyautogui.click(x=1100, y=230)
+
+def open_formation(app):
+    """
+    編成を開く操作: x=300, y=360の座標をクリックし、"現在すること"を更新
+    """
+    app.update_display(current_task="編成を開く中")
+    pyautogui.click(x=300, y=360)
+
+def supply(app):
+    """
+    補給をする操作:
+    1. x=100, y=490をクリック
+    2. 4秒の遅延
+    3. x=180, y=340をクリック
+    """
+    # 現在することの部分を更新
+    app.update_display(current_task="補給中")
+    
+    # 最初のクリック
+    pyautogui.click(x=100, y=490)
+    
+    # 4秒の遅延
+    time.sleep(4)
+    
+    # 次のクリック
+    pyautogui.click(x=180, y=340)
+    
+    time.sleep(3)
+
+def return_to_port(app):
+    """
+    母港に戻る操作: x=65, y=230の座標をクリックし、"現在すること"を更新
+    """
+    app.update_display(current_task="母港に戻る中")
+    pyautogui.click(x=65, y=230)
