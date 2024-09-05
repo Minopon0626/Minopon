@@ -60,20 +60,48 @@ def supply(app):
     1. x=100, y=490をクリック
     2. 4秒の遅延
     3. x=180, y=340をクリック
+    4. 4秒の遅延
+    5. x=260, y=340をクリック
+    6. 4秒の遅延
+    7. x=310, y=340をクリック
+    8. 4秒の遅延
+    9. x=355, y=340をクリック
+    10. 4秒の遅延
+    11. 母港に戻る
     """
-    # 現在することの部分を更新
     app.update_display(current_task="補給中")
     
     # 最初のクリック
     pyautogui.click(x=100, y=490)
-    
-    # 4秒の遅延
     time.sleep(4)
     
-    # 次のクリック
+    # 2番目のクリック
     pyautogui.click(x=180, y=340)
+    time.sleep(4)
     
-    time.sleep(3)
+    # 3番目のクリック
+    pyautogui.click(x=260, y=340)
+    time.sleep(4)
+    
+    pyautogui.click(x=180, y=340)
+    time.sleep(4)
+    
+    # 4番目のクリック
+    pyautogui.click(x=310, y=340)
+    time.sleep(4)
+    
+    pyautogui.click(x=180, y=340)
+    time.sleep(4)
+    
+    # 5番目のクリック
+    pyautogui.click(x=355, y=340)
+    time.sleep(4)
+    
+    pyautogui.click(x=180, y=340)
+    time.sleep(4)
+    
+    # 母港に戻る
+    return_to_port(app)
 
 def return_to_port(app):
     """
