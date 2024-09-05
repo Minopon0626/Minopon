@@ -2,31 +2,30 @@ import tkinter as tk
 from start_action import start_action
 from stop_action import stop_action
 from timer import Timer
-from pyautogui_actions import perform_actions  # pyautogui操作をインポート
+from pyautogui_actions import perform_actions_a, perform_actions_b, perform_actions_c  # pyautoguiの動作をインポート
 from ammo_action import ammo_action  # ammo_actionをインポート
 from bauxite_action import bauxite_action  # bauxite_actionをインポート
+
 
 class InfoApp:
     def __init__(self, root):
         self.root = root
         self.root.title("情報表示アプリ")
-        self.root.geometry("400x600")  # ウィンドウの高さを調整しました
+        self.root.geometry("400x600")
         self.root.configure(bg="lightgray")
 
         self.current_task_text = "表示内容A"
         self.next_click_text = "表示内容C"
-        self.timer_a_text = "3時間20分"  # タイマーAに3:20を初期表示
-        self.timer_b_text = "2時間45分"  # タイマーBに2:45を初期表示
-        self.timer_c_text = "2時間55分"  # タイマーCに2:55を初期表示
+        self.timer_a_text = "3時間20分"
+        self.timer_b_text = "2時間45分"
+        self.timer_c_text = "2時間55分"
 
-        # 各行のラベルと値のフレームを作成
         self.row1_label, self.row1_value = self.create_table_row("現在すること", self.current_task_text)
         self.row2_label, self.row2_value = self.create_table_row("次クリックする場所", self.next_click_text)
         self.timer_a_label, self.timer_a_value = self.create_table_row("タイマーA", self.timer_a_text)
         self.timer_b_label, self.timer_b_value = self.create_table_row("タイマーB", self.timer_b_text)
         self.timer_c_label, self.timer_c_value = self.create_table_row("タイマーC", self.timer_c_text)
-        
-        # 各行をグリッドに配置
+
         self.row1_label.grid(row=0, column=0, sticky="nsew")
         self.row1_value.grid(row=0, column=1, sticky="nsew")
         
@@ -43,8 +42,7 @@ class InfoApp:
         self.timer_c_value.grid(row=4, column=1, sticky="nsew")
 
         self.create_buttons()
-        
-        # グリッドの行と列の設定
+
         self.root.grid_columnconfigure(0, weight=1)
         self.root.grid_columnconfigure(1, weight=1)
         for i in range(5):
@@ -82,21 +80,27 @@ class InfoApp:
         self.stop_button.config(state="normal")
         self.update_display(current_task="遠征中")
         
-        # タイマーA, B, Cをすべて開始
+        # タイマーA, B, Cをすべて開始し、対応するpyautogui動作を実行
         self.start_timer_a()
         self.start_timer_b()
         self.start_timer_c()
 
     def start_timer_a(self):
-        self.update_display(current_task="タイマーA開始")
+        # タイマーA開始時の表示を更新
+        self.update_display(current_task="タイマーA開始中")
+        perform_actions_a()  # タイマーAの動作を実行
         self.timer.start_timer_a()
 
     def start_timer_b(self):
-        self.update_display(current_task="タイマーB開始")
+        # タイマーB開始時の表示を更新
+        self.update_display(current_task="タイマーB開始中")
+        perform_actions_b()  # タイマーBの動作を実行
         self.timer.start_timer_b()
 
     def start_timer_c(self):
-        self.update_display(current_task="タイマーC開始")
+        # タイマーC開始時の表示を更新
+        self.update_display(current_task="タイマーC開始中")
+        perform_actions_c()  # タイマーCの動作を実行
         self.timer.start_timer_c()
 
     def stop_action(self):

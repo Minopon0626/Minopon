@@ -2,15 +2,19 @@ def bauxite_action(app):
     # ボーキボタンがクリックされたときの処理を記述
     app.update_display(current_task="ボーキ実行中")
 
-    # いずれかのタイマーが終了したかどうかを確認
+    # いずれかのタイマーが終了したかどうかを確認し、終了しているタイマーを起動
     if not app.timer.timer_running_a or not app.timer.timer_running_b or not app.timer.timer_running_c:
-        app.update_display(next_time="いずれかのタイマーが終了")
-        app.start_action()  # タイマーが終了している場合、スタートボタンと同じ処理を実行
+        app.update_display(current_task="いずれかのタイマーが終了")
 
-        # コンソールに終了したタイマーを表示
+        # 終了しているタイマーを再起動
         if not app.timer.timer_running_a:
-            print("タイマーAが終了しました")
+            print("タイマーAが終了しました。再起動します。")
+            app.start_timer_a()  # タイマーAを開始
+
         if not app.timer.timer_running_b:
-            print("タイマーBが終了しました")
+            print("タイマーBが終了しました。再起動します。")
+            app.start_timer_b()  # タイマーBを開始
+
         if not app.timer.timer_running_c:
-            print("タイマーCが終了しました")
+            print("タイマーCが終了しました。再起動します。")
+            app.start_timer_c()  # タイマーCを開始
