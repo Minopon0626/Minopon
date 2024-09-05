@@ -34,3 +34,15 @@ def perform_actions_c():
     time.sleep(1)
     # 他の動作を追加
     pyautogui.write('タイマーC開始中', interval=0.25)
+
+def expedition_receive(app):
+    """
+    遠征受取の操作: x=1100, y=230の座標をクリックし、"現在すること"を更新
+    """
+    # 現在することの部分を更新
+    app.update_display(current_task="遠征受取中")
+
+    # 遠征受取のクリック操作
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+    pyautogui.click(x=1100, y=230)

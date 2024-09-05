@@ -2,10 +2,9 @@ import tkinter as tk
 from start_action import start_action
 from stop_action import stop_action
 from timer import Timer
-from pyautogui_actions import perform_actions_a, perform_actions_b, perform_actions_c  # pyautoguiの動作をインポート
+from pyautogui_actions import perform_actions_a, perform_actions_b, perform_actions_c, expedition_receive  # pyautoguiの動作をインポート
 from ammo_action import ammo_action  # ammo_actionをインポート
 from bauxite_action import bauxite_action  # bauxite_actionをインポート
-
 
 class InfoApp:
     def __init__(self, root):
@@ -80,7 +79,7 @@ class InfoApp:
         self.stop_button.config(state="normal")
         self.update_display(current_task="遠征中")
         
-        # タイマーA, B, Cをすべて開始し、対応するpyautogui動作を実行
+        # タイマーA, B, Cをすべて開始し、対応するpyautogui動作と遠征受取を実行
         self.start_timer_a()
         self.start_timer_b()
         self.start_timer_c()
@@ -88,18 +87,21 @@ class InfoApp:
     def start_timer_a(self):
         # タイマーA開始時の表示を更新
         self.update_display(current_task="タイマーA開始中")
+        expedition_receive(self)  # 遠征受取操作
         perform_actions_a()  # タイマーAの動作を実行
         self.timer.start_timer_a()
 
     def start_timer_b(self):
         # タイマーB開始時の表示を更新
         self.update_display(current_task="タイマーB開始中")
+        expedition_receive(self)  # 遠征受取操作
         perform_actions_b()  # タイマーBの動作を実行
         self.timer.start_timer_b()
 
     def start_timer_c(self):
         # タイマーC開始時の表示を更新
         self.update_display(current_task="タイマーC開始中")
+        expedition_receive(self)  # 遠征受取操作
         perform_actions_c()  # タイマーCの動作を実行
         self.timer.start_timer_c()
 
