@@ -46,6 +46,8 @@ def expedition_receive(app):
     pyautogui.click(x=1100, y=230)
     time.sleep(5)
     pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+    pyautogui.click(x=1100, y=230)
 
 def open_formation(app):
     """

@@ -69,7 +69,7 @@ def bauxite_action(app):
     pyautogui.click(x=1010, y=840)
     time.sleep(4)  # 4秒待機
     
-    # 出撃決定をクリック
+    # 出撃開始をクリック
     pyautogui.click(x=920, y=830)
     time.sleep(4)  # 4秒待機
     
@@ -86,14 +86,112 @@ def bauxite_action(app):
     戦闘Cマス
     """
     
+    # 夜戦or追撃不要選択画面
     if wait_for_image('tuigeki_or_tettai.png', threshold=0.9, timeout=120):
         pyautogui.click(x=440, y=520)
     time.sleep(5)
     
-    """
-    一戦目の追撃不要部分まで完成
+    # 戦闘完了、追撃不要を選択
     
-    """
+    # 戦闘評価をクリック
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 経験値を回収
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 進撃 or 撤退を選択する画面
+    if wait_for_image('singeki_or_tettai.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 羅針盤C → Dを回す部分
+    if wait_for_image('7-4_C_to_D.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # Dマス空襲完全勝利の表記
+    if wait_for_image('kuusyuu_S_syouri.png', threshold=0.9, timeout=240):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 経験値回収
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 進撃 or 撤退を選択する画面
+    if wait_for_image('singeki_or_tettai.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 能動分岐先を選択する画面
+    if wait_for_image('7-4_F_to_J.png', threshold=0.98, timeout=120):
+        time.sleep(4)
+        pyautogui.click(x=707, y=482)
+    time.sleep(5)
+
+    # 夜戦or追撃不要選択画面
+    if wait_for_image('tuigeki_or_tettai.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 戦闘評価をクリック
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 経験値回収
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 進撃 or 撤退を選択する画面
+    if wait_for_image('7-4_J_to_K.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 夜戦or追撃不要選択画面
+    if wait_for_image('tuigeki_or_tettai.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 戦闘評価をクリック
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 経験値回収
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+
+    # 進撃 or 撤退を選択する画面
+    if wait_for_image('7-4_K_to_M.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+
+    # 羅針盤なし
+
+    # Dマス空襲完全勝利の表記
+    if wait_for_image('kuusyuu_S_syouri.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+    
+    # 経験値回収
+    pyautogui.click(x=1100, y=230)
+    time.sleep(5)
+    
+    # 進撃 or 撤退を選択する画面
+    if wait_for_image('singeki_or_tettai.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+    
+    # 羅針盤M → Goalを回す部分
+    if wait_for_image('7-4_M_to_Goal.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
+    
+    # ゴールの報酬をもらう部分
+    if wait_for_image('Result.png', threshold=0.9, timeout=120):
+        pyautogui.click(x=440, y=520)
+    time.sleep(5)
     
     # いずれかのタイマーが終了したかどうかを確認し、終了しているタイマーを起動
     if not app.timer.timer_running_a or not app.timer.timer_running_b or not app.timer.timer_running_c:
