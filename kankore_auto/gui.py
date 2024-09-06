@@ -39,7 +39,7 @@ def create_gui():
     expedition_button.grid(row=4, column=0, padx=5, pady=10)
 
     # ボーキボタン
-    bauxite_button = tk.Button(root, text="ボーキ", command=lambda: bauxite_click(value_current_task))
+    bauxite_button = tk.Button(root, text="ボーキ", command=lambda: bauxite_click(root, value_current_task))
     bauxite_button.grid(row=4, column=1, padx=5, pady=10)
 
     root.mainloop()
