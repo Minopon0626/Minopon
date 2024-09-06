@@ -1,10 +1,10 @@
-import time
+from timer import start_timer
 
-def expedition_action(current_task_label):
-    # 遠征の処理
-    update_label(current_task_label, "遠征中...")
-    time.sleep(2)  # 仮に処理に2秒かかるとします
-    update_label(current_task_label, "遠征完了")
+def start_expedition(label_second_fleet, label_third_fleet, label_fourth_fleet):
+    # 第二艦隊, 第三艦隊, 第四艦隊のタイマーを開始
+    start_timer(600, label_second_fleet)  # 10分 = 600秒
+    start_timer(1200, label_third_fleet)  # 20分 = 1200秒
+    start_timer(4800, label_fourth_fleet)  # 1時間20分 = 4800秒
 
 # ラベルを更新する関数
 def update_label(label, new_value):
