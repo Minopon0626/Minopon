@@ -44,10 +44,11 @@ def expedition_receive(app):
 
     # 遠征受取のクリック操作
     pyautogui.click(x=1100, y=230)
-    time.sleep(5)
+    time.sleep(8)
     pyautogui.click(x=1100, y=230)
-    time.sleep(5)
+    time.sleep(8)
     pyautogui.click(x=1100, y=230)
+    time.sleep(8)
 
 def open_formation(app):
     """

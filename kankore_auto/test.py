@@ -1,101 +1,77 @@
-import tkinter as tk
+import cv2
+import pytesseract
+import pyautogui
+import os
+from PIL import Image
 
-class InfoApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("情報表示アプリ")  # ウィンドウのタイトルを設定
-        self.root.geometry("400x350")  # ウィンドウのサイズを設定
-        self.root.configure(bg="lightgray")  # ウィンドウの背景色を薄いグレーに設定
+# Tesseract OCR のパスを設定 (例: Windowsの場合)
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-        # ラベルと値の初期表示内容
-        self.current_task_text = "表示内容A"
-        self.next_time_text = "表示内容B"
-        self.next_click_text = "表示内容C"
+# スクリーンショットを指定範囲で撮影
+def capture_screenshot(x, y, w, h):
+    screenshot = pyautogui.screenshot(region=(x, y, w, h))  # スクリーンショットの範囲を指定
+    screenshot = screenshot.convert('RGB')  # Pillow 形式でスクリーンショットを保存
+    return screenshot
 
-        # テーブルの行を作成
-        self.row1_label, self.row1_value = self.create_table_row("現在すること", self.current_task_text)
-        self.row2_label, self.row2_value = self.create_table_row("次の稼働時間まで", self.next_time_text)
-        self.row3_label, self.row3_value = self.create_table_row("次クリックする場所", self.next_click_text)
-        
-        # 各行を表示
-        self.row1_label.grid(row=0, column=0, sticky="nsew")
-        self.row1_value.grid(row=0, column=1, sticky="nsew")
-        
-        self.row2_label.grid(row=1, column=0, sticky="nsew")
-        self.row2_value.grid(row=1, column=1, sticky="nsew")
-        
-        self.row3_label.grid(row=2, column=0, sticky="nsew")
-        self.row3_value.grid(row=2, column=1, sticky="nsew")
+# 認識対象範囲の数字のみを認識して座標を記録し、結果を保存する
+def recognize_numbers_in_region_from_screenshot(x, y, w, h, output_dir='recognized_text'):
+    recognized_numbers_info = []
 
-        # ボタンを作成
-        self.create_buttons()
+    # スクリーンショットを撮影
+    screenshot = capture_screenshot(x, y, w, h)
+    
+    # 一時的なファイルに保存してOpenCVで読み込む
+    temp_image_path = 'temp_screenshot.png'
+    screenshot.save(temp_image_path)
+    
+    # スクリーンショットをOpenCV形式で読み込む
+    img = cv2.imread(temp_image_path)
 
-        # グリッドのカラムのウェイトを設定して、列幅を均等にする
-        self.root.grid_columnconfigure(0, weight=1)
-        self.root.grid_columnconfigure(1, weight=1)
+    # グレースケールに変換
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        # グリッドの行のウェイトを設定して、行高さを均等にする
-        self.root.grid_rowconfigure(0, weight=1)
-        self.root.grid_rowconfigure(1, weight=1)
-        self.root.grid_rowconfigure(2, weight=1)
-        self.root.grid_rowconfigure(3, weight=1)
-        self.root.grid_rowconfigure(4, weight=1)
+    # 画像から数字のみを認識 (config='digits' オプションを使用)
+    custom_config = r'--oem 3 --psm 6 outputbase digits'
+    data = pytesseract.image_to_data(gray, config=custom_config, output_type=pytesseract.Output.DICT)
 
-    def create_table_row(self, label_text, value_text):
-        # 1列目はグレーの背景、2列目は白の背景
-        label_frame = tk.Frame(self.root, bg="lightgray", padx=10, pady=5, borderwidth=1, relief="solid")
-        label = tk.Label(label_frame, text=label_text, bg="lightgray", font=("Arial", 12))
-        label.pack(fill="both", expand=True)
+    # 認識結果を元画像に描画
+    for i, text in enumerate(data['text']):
+        if text.strip().isdigit():  # 数字かどうか確認
+            x_coord = data['left'][i] + x  # スクリーン全体の座標に変換
+            y_coord = data['top'][i] + y
+            w_coord = data['width'][i]
+            h_coord = data['height'][i]
+            
+            # 認識された数字を囲む四角形を描画
+            cv2.rectangle(img, (data['left'][i], data['top'][i]), 
+                          (data['left'][i] + data['width'][i], data['top'][i] + data['height'][i]), 
+                          (0, 255, 0), 2)
+            
+            # 認識した数字の情報を記録
+            recognized_numbers_info.append({
+                'text': text,
+                'x': x_coord,
+                'y': y_coord,
+                'width': w_coord,
+                'height': h_coord
+            })
 
-        value_frame = tk.Frame(self.root, bg="white", padx=10, pady=5, borderwidth=1, relief="solid")
-        value_label = tk.Label(value_frame, text=value_text, bg="white", font=("Arial", 12))
-        value_label.pack(fill="both", expand=True)
-        
-        return label_frame, value_frame
+    # 認識した文字を囲った画像を保存
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    output_image_path = os.path.join(output_dir, 'recognized_screenshot.png')
+    cv2.imwrite(output_image_path, img)
 
-    def create_buttons(self):
-        # 「スタート」ボタンを作成して配置
-        self.start_button = tk.Button(self.root, text="スタート", command=self.start_action)
-        self.start_button.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+    # 一時ファイルを削除
+    os.remove(temp_image_path)
 
-        # 「ストップ」ボタンを作成して配置（初期状態では無効）
-        self.stop_button = tk.Button(self.root, text="ストップ", command=self.stop_action, state=tk.DISABLED)
-        self.stop_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
+    return recognized_numbers_info
 
-    def start_action(self):
-        # 新しい表示内容を設定（例として固定値を使用）
-        self.update_display(current_task="更新された表示内容A", next_time="更新された表示内容B", next_click="更新された表示内容C")
+# 例: 中央左部分にある"45"付近の範囲を指定 (x, y, w, h の値を調整)
+x, y, w, h = 200, 400, 35, 360  # "45" があると思われるスクリーン上の座標とサイズを指定
+recognized_info = recognize_numbers_in_region_from_screenshot(x, y, w, h)
 
-        # 「スタート」ボタンを無効にし、「ストップ」ボタンを有効にする
-        self.start_button.config(state=tk.DISABLED)
-        self.stop_button.config(state=tk.NORMAL)
-
-    def stop_action(self):
-        # 表示内容を元に戻す（例として元の値を設定）
-        self.update_display(current_task="表示内容A", next_time="表示内容B", next_click="表示内容C")
-
-        # 「スタート」ボタンを有効にし、「ストップ」ボタンを無効にする
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
-
-    def update_display(self, current_task=None, next_time=None, next_click=None):
-        # 表示内容を更新する
-        if current_task is not None:
-            self.current_task_text = current_task
-            self.row1_value.winfo_children()[0].config(text=self.current_task_text)
-        
-        if next_time is not None:
-            self.next_time_text = next_time
-            self.row2_value.winfo_children()[0].config(text=self.next_time_text)
-        
-        if next_click is not None:
-            self.next_click_text = next_click
-            self.row3_value.winfo_children()[0].config(text=self.next_click_text)
-
-def main():
-    root = tk.Tk()
-    app = InfoApp(root)
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()
+# 認識した結果を出力
+for info in recognized_info:
+    print(f"Text: {info['text']}, Coordinates: ({info['x']}, {info['y']}), Size: ({info['width']}x{info['height']})")

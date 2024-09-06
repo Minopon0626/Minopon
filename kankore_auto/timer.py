@@ -18,7 +18,7 @@ class Timer:
         if self.timer_running_a:
             return  # タイマーAがすでに動作している場合は何もしない
         
-        self.end_time_a = time.time() + (3 * 3600 + 20 * 60)  # タイマーAは3時間20分
+        self.end_time_a = time.time() + (29 * 60)  # タイマーAは29分
         self.timer_running_a = True
         self.timer_thread_a = threading.Thread(target=self._update_timer_a)
         self.timer_thread_a.daemon = True
@@ -28,7 +28,7 @@ class Timer:
         if self.timer_running_b:
             return  # タイマーBがすでに動作している場合は何もしない
         
-        self.end_time_b = time.time() + (2 * 3600 + 45 * 60)  # タイマーBは2時間45分
+        self.end_time_b = time.time() + (2 * 3600 + 44 * 60)  # タイマーBは2時間44分
         self.timer_running_b = True
         self.timer_thread_b = threading.Thread(target=self._update_timer_b)
         self.timer_thread_b.daemon = True
@@ -38,7 +38,7 @@ class Timer:
         if self.timer_running_c:
             return  # タイマーCがすでに動作している場合は何もしない
         
-        self.end_time_c = time.time() + (2 * 3600 + 55 * 60)  # タイマーCは2時間55分
+        self.end_time_c = time.time() + (2 * 3600 + 54 * 60)  # タイマーCは2時間54分
         self.timer_running_c = True
         self.timer_thread_c = threading.Thread(target=self._update_timer_c)
         self.timer_thread_c.daemon = True
