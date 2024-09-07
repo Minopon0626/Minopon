@@ -1,8 +1,13 @@
 import time
 import threading
 
-def start_timer(seconds, label):
-    # タイマーをスレッドで実行
+def start_independent_timer(seconds, label):
+    """
+    独立したタイマーを開始し、残り時間をラベルに表示する。
+    
+    :param seconds: タイマーの秒数
+    :param label: 残り時間を表示するTkinterのラベル
+    """
     def update_timer():
         remaining_time = seconds
         while remaining_time > 0:
@@ -14,5 +19,5 @@ def start_timer(seconds, label):
             remaining_time -= 1
         label.config(text="完了")
 
-    # タイマーをスレッドで開始
+    # 独立したスレッドでタイマーを開始
     threading.Thread(target=update_timer).start()

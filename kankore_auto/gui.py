@@ -35,7 +35,7 @@ def create_gui():
     value_fourth_fleet.grid(row=3, column=1, padx=5, pady=5)
 
     # 遠征ボタン
-    expedition_button = tk.Button(root, text="遠征", command=lambda: start_expedition(value_second_fleet, value_third_fleet, value_fourth_fleet))
+    expedition_button = tk.Button(root, text="遠征", command=lambda: start_expedition(root, value_second_fleet, value_third_fleet, value_fourth_fleet))
     expedition_button.grid(row=4, column=0, padx=5, pady=10)
 
     # ボーキボタン

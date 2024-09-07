@@ -14,5 +14,5 @@ def delayed_click(root, x, y):
     print(f"マウスを移動予定 - 座標 ({x}, {y})")
 
     # さらに2秒後にクリック
-    root.after(5000, lambda: pyautogui.click(x, y))
+    root.after(2000, lambda: pyautogui.click(x, y))
     print(f"クリック予定 - 座標 ({x}, {y})")
