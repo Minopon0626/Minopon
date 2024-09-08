@@ -1,5 +1,5 @@
 import tkinter as tk
-from expedition_action import start_expedition
+from expedition_action import start_expedition, receive_reward
 from bauxite_action import bauxite_click  # ボーキボタンの処理をインポート
 
 def create_gui():
@@ -36,15 +36,19 @@ def create_gui():
 
     # 遠征ボタン
     expedition_button = tk.Button(
-        root, text="遠征", 
+        root, text="遠征",
         command=lambda: start_expedition(
             root, value_current_task, value_second_fleet, value_third_fleet, value_fourth_fleet
         )
     )
     expedition_button.grid(row=4, column=0, padx=5, pady=10)
 
+    # 受け取りボタン
+    receive_button = tk.Button(root, text="受け取り", command=lambda: receive_reward(root, value_current_task))
+    receive_button.grid(row=4, column=1, padx=5, pady=10)
+
     # ボーキボタン
     bauxite_button = tk.Button(root, text="ボーキ", command=lambda: bauxite_click(root, value_current_task))
-    bauxite_button.grid(row=4, column=1, padx=5, pady=10)
+    bauxite_button.grid(row=4, column=2, padx=5, pady=10)
 
     root.mainloop()

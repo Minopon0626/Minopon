@@ -156,3 +156,74 @@ def timed_compare_and_click(root, top_left_x, top_left_y, button_name, image_fil
 
     # 最初のチェックを開始（非同期）
     root.after(10, check_similarity)
+
+def return_to_home_port(root, current_task_label):
+    """
+    母港に戻る一連の処理を行う関数。
+    ラベルを「母港に戻る」に更新し、指定された座標でクリックする。
+
+    :param root: Tkinterのrootウィンドウ（afterメソッドを利用するため）
+    :param current_task_label: ラベルを更新するTkinterラベル
+    """
+    # 「母港に戻る」と表示を更新し、指定座標でクリック
+    delayed_update(root, current_task_label, 0, "母港に戻る")
+    delayed_click(root, 60, 210)
+
+def supply_fleets(root, current_task_label):
+    """
+    補給処理を行う関数。
+    順番に遅延させて艦隊の補給を行い、最後に母港に戻る。
+
+    :param root: Tkinterのrootウィンドウ（afterメソッドを利用するため）
+    :param current_task_label: ラベルを更新するTkinterラベル
+    """
+    # 補給画面への移動
+    delayed_click(root, 120, 500)
+    delayed_update(root, current_task_label, 0, "母港から補給画面へ移動")
+
+    # 5秒後: 第一艦隊の補給
+    root.after(5000, lambda: (
+        delayed_update(root, current_task_label, 0, "補給画面で第一艦隊を補給"),
+        delayed_click(root, 170, 340)
+    ))
+
+    # 10秒後: 第二艦隊に切り替え
+    root.after(10000, lambda: (
+        delayed_update(root, current_task_label, 0, "第二艦隊に切り替え"),
+        delayed_click(root, 260, 340)
+    ))
+
+    # 15秒後: 第二艦隊の補給
+    root.after(15000, lambda: (
+        delayed_update(root, current_task_label, 0, "補給画面で第二艦隊を補給"),
+        delayed_click(root, 170, 340)
+    ))
+
+    # 20秒後: 第三艦隊に切り替え
+    root.after(20000, lambda: (
+        delayed_update(root, current_task_label, 0, "第三艦隊に切り替え"),
+        delayed_click(root, 310, 340)
+    ))
+
+    # 25秒後: 第三艦隊の補給
+    root.after(25000, lambda: (
+        delayed_update(root, current_task_label, 0, "補給画面で第三艦隊を補給"),
+        delayed_click(root, 170, 340)
+    ))
+
+    # 30秒後: 第四艦隊に切り替え
+    root.after(30000, lambda: (
+        delayed_update(root, current_task_label, 0, "第四艦隊に切り替え"),
+        delayed_click(root, 355, 340)
+    ))
+
+    # 35秒後: 第四艦隊の補給
+    root.after(35000, lambda: (
+        delayed_update(root, current_task_label, 0, "補給画面で第四艦隊を補給"),
+        delayed_click(root, 170, 340)
+    ))
+
+    # 40秒後: 母港に戻る
+    root.after(40000, lambda: (
+        return_to_home_port(root, current_task_label)
+    ))
