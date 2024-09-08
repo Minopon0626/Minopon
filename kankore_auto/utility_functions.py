@@ -2,6 +2,7 @@ import pyautogui
 import cv2
 import numpy as np
 import os
+import time
 
 def delayed_click(root, x, y):
     """
@@ -120,3 +121,38 @@ def compare_screen_to_image(top_left_x, top_left_y, button_name, image_file_name
     # 類似度が閾値以上かどうかを判定
     print("類似度:", max_val)
     return max_val >= threshold
+
+def timed_compare_and_click(root, top_left_x, top_left_y, button_name, image_file_name, threshold, click_x, click_y):
+    """
+    compare_screen_to_imageの類似度が引数で指定された値を超え、かつ呼び出されて2秒以上経過した場合にクリック座標をクリック。
+    この関数が終了するのは呼び出されてから5秒後。
+    
+    :param root: Tkinterのrootウィンドウ（afterメソッドを利用するため）
+    :param top_left_x: 比較画像の左上X座標
+    :param top_left_y: 比較画像の左上Y座標
+    :param button_name: 押されたボタンの名前
+    :param image_file_name: 比較する画像のファイル名
+    :param threshold: 類似度の閾値
+    :param click_x: クリックするX座標
+    :param click_y: クリックするY座標
+    """
+    
+    start_time = time.time()  # 関数が呼び出された時刻を記録
+
+    def check_similarity():
+        # 2秒以上経過しているか確認
+        if time.time() - start_time >= 2:
+            # compare_screen_to_imageを使用して類似度を確認
+            if compare_screen_to_image(top_left_x, top_left_y, button_name, image_file_name, threshold):
+                # 類似度が指定された値を超えた場合、クリックを実行
+                pyautogui.click(click_x, click_y)
+                print(f"クリックしました: 座標 ({click_x}, {click_y})")
+        
+        # 5秒後に終了
+        if time.time() - start_time < 5:
+            root.after(10, check_similarity)
+        else:
+            print("関数終了（5秒経過）")
+
+    # 最初のチェックを開始（非同期）
+    root.after(10, check_similarity)
