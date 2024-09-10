@@ -51,4 +51,8 @@ def create_gui():
     bauxite_button = tk.Button(root, text="ボーキ", command=lambda: bauxite_click(root, value_current_task))
     bauxite_button.grid(row=4, column=2, padx=5, pady=10)
 
+    # 第二艦隊ボタン
+    second_fleet_button = tk.Button(root, text="第二艦隊", command=lambda: print("第二艦隊ボタンが押されました"))
+    second_fleet_button.grid(row=5, column=0, padx=5, pady=10)
+
     root.mainloop()

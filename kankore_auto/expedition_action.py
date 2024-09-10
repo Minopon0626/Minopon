@@ -2,39 +2,56 @@ from timer import start_independent_timer
 from utility_functions import delayed_click, delayed_update, return_to_home_port, supply_fleets
 import tkinter as tk
 
-# それぞれの艦隊の処理を実行する関数
+fleet_timers_active = {
+    "second_fleet": False,
+    "third_fleet": False,
+    "fourth_fleet": False
+}
+
 def start_second_fleet(root, current_task_label, label_second_fleet):
     """
     第二艦隊のタイマーを開始する処理
-    前提として遠征の受取及び補給は完了しているとする
     タイマー29分
     """
+    if fleet_timers_active["second_fleet"]:
+        return  # すでにタイマーが動作している場合、処理を終了
 
-    supply_fleets(root, current_task_label)
-
-    # 第二艦隊のタイマーを開始
+    fleet_timers_active["second_fleet"] = True
     start_independent_timer(1740, label_second_fleet)  # 29分 = 1740秒
+    # タイマーが終了した後、フラグをリセット
+    root.after(1740000, lambda: fleet_timers_active.update({"second_fleet": False}))
 
 def start_third_fleet(root, label_third_fleet):
     """
     第三艦隊のタイマーを開始する処理
-    前提として遠征の受取及び補給は完了しているとする
+    タイマー20分
     """
+    if fleet_timers_active["third_fleet"]:
+        return  # すでにタイマーが動作している場合、処理を終了
 
+    fleet_timers_active["third_fleet"] = True
+    print("第三艦隊の遠征を開始")
     start_independent_timer(1200, label_third_fleet)  # 20分 = 1200秒
+    # タイマーが終了した後、フラグをリセット
+    root.after(1200000, lambda: fleet_timers_active.update({"third_fleet": False}))
 
 def start_fourth_fleet(root, label_fourth_fleet):
     """
     第四艦隊のタイマーを開始する処理
-    前提として遠征の受取及び補給は完了しているとする
+    タイマー1時間20分
     """
+    if fleet_timers_active["fourth_fleet"]:
+        return  # すでにタイマーが動作している場合、処理を終了
 
+    fleet_timers_active["fourth_fleet"] = True
+    print("第四艦隊の遠征を開始")
     start_independent_timer(4800, label_fourth_fleet)  # 1時間20分 = 4800秒
+    # タイマーが終了した後、フラグをリセット
+    root.after(4800000, lambda: fleet_timers_active.update({"fourth_fleet": False}))
 
-# 遠征の全体処理をまとめた関数
 def start_expedition(root, current_task_label, label_second_fleet, label_third_fleet, label_fourth_fleet):
     """
-    遠征を順次スタートさせる。第二艦隊 -> 5秒遅延 -> 第三艦隊 -> 5秒遅延 -> 第四艦隊
+    遠征を順次スタートさせる。各艦隊のタイマーが既に動作している場合は新しく作成しない。
     """
     # 第二艦隊のタイマーをスタート
     start_second_fleet(root, current_task_label, label_second_fleet)
