@@ -54,5 +54,208 @@ def bauxite_click(root, current_task_label):
         delayed_click(root, 920, 830)
     ))
 
+    # 海域に突入
+
+    root.after(45000, lambda: (
+        delayed_update(root, current_task_label, 0, "羅針盤を回転"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    # start to C
+
+    root.after(55000, lambda: (
+        delayed_update(root, current_task_label, 0, "輪形陣を選択"),
+        delayed_click(root, 1060, 440)
+    ))
+
+    # 戦闘開始 Cマス
+
+    # 戦闘は30秒ほど
+
+    root.after(85000, lambda: (
+        delayed_update(root, current_task_label, 0, "追撃せずを選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # 戦闘終了, リザルトは10秒ほどあとに出現
+
+    root.after(95000, lambda: (
+        delayed_update(root, current_task_label, 0, "戦闘評価更新"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(100000, lambda: (
+        delayed_update(root, current_task_label, 0, "経験値回収"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(105000, lambda: (
+        delayed_update(root, current_task_label, 0, "進撃を選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # Cマス報酬受け取り完了
+
+    root.after(110000, lambda: (
+        delayed_update(root, current_task_label, 0, "羅針盤を回転"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    # C to D
+
+    root.after(120000, lambda: (
+        delayed_update(root, current_task_label, 0, "輪形陣を選択"),
+        delayed_click(root, 1060, 440)
+    ))
+
+    # 戦闘開始 Dマス
+
+    # 戦闘は30秒ほど
+    # 空襲なので追撃選択肢なし
+
+    root.after(150000, lambda: (
+        delayed_update(root, current_task_label, 0, "戦闘評価更新"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(155000, lambda: (
+        delayed_update(root, current_task_label, 0, "経験値回収"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(160000, lambda: (
+        delayed_update(root, current_task_label, 0, "進撃を選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # Dマス報酬受け取り完了
+
+    # 報酬受け取り後自動移動
+
+
+    # 能動選択
+    root.after(170000, lambda: (
+        delayed_update(root, current_task_label, 0, "能動選択[J]を選択"),
+        delayed_click(root, 710, 480)
+    ))
+
+    # Jマス移動
+
+    root.after(180000, lambda: (
+        delayed_update(root, current_task_label, 0, "輪形陣を選択"),
+        delayed_click(root, 1060, 440)
+    ))
+
+    # 戦闘開始 Jマス
+
+    # 戦闘は50秒ほど
+    root.after(230000, lambda: (
+        delayed_update(root, current_task_label, 0, "追撃せずを選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    root.after(240000, lambda: (
+        delayed_update(root, current_task_label, 0, "戦闘評価更新"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(245000, lambda: (
+        delayed_update(root, current_task_label, 0, "経験値回収"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(250000, lambda: (
+        delayed_update(root, current_task_label, 0, "進撃を選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # Jマス報酬受け取り完了
+
+    # 羅針盤
+    root.after(255000, lambda: (
+        delayed_update(root, current_task_label, 0, "羅針盤を回転"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    # J to K
+
+    root.after(270000, lambda: (
+        delayed_update(root, current_task_label, 0, "輪形陣を選択"),
+        delayed_click(root, 1060, 440)
+    ))
+
+    # 戦闘開始 Kマス
+
+    # 戦闘は30秒ほど
+
+    root.after(300000, lambda: (
+        delayed_update(root, current_task_label, 0, "追撃せずを選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    root.after(310000, lambda: (
+        delayed_update(root, current_task_label, 0, "戦闘評価更新"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(315000, lambda: (
+        delayed_update(root, current_task_label, 0, "経験値回収"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(320000, lambda: (
+        delayed_update(root, current_task_label, 0, "進撃を選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # Kマス報酬受け取り完了
+
+    # 羅針盤
+    root.after(325000, lambda: (
+        delayed_update(root, current_task_label, 0, "羅針盤を回転"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    # K to M
+
+    root.after(335000, lambda: (
+        delayed_update(root, current_task_label, 0, "輪形陣を選択"),
+        delayed_click(root, 1060, 440)
+    ))
+
+    # 戦闘開始 Dマス
+
+    # 戦闘は40秒ほど
+    # 空襲なので追撃選択肢なし
+
+    root.after(375000, lambda: (
+        delayed_update(root, current_task_label, 0, "戦闘評価更新"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(385000, lambda: (
+        delayed_update(root, current_task_label, 0, "経験値回収"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    root.after(390000, lambda: (
+        delayed_update(root, current_task_label, 0, "進撃を選択"),
+        delayed_click(root, 430, 520)
+    ))
+
+    # Dマス報酬受け取り完了
+
+    # 羅針盤
+    root.after(400000, lambda: (
+        delayed_update(root, current_task_label, 0, "羅針盤を回転"),
+        delayed_click(root, 1010, 200)
+    ))
+
+    # goal到達
+    root.after(410000, lambda: (
+        delayed_update(root, current_task_label, 0, "報酬を受け取り"),
+        delayed_click(root, 1010, 200)
+    ))
+
     # 3. 10秒後に「ボーキ完了」に更新
     root.after(45000, lambda: delayed_update(root, current_task_label, 0, "ボーキ完了"))
