@@ -227,3 +227,51 @@ def supply_fleets(root, current_task_label):
     root.after(40000, lambda: (
         return_to_home_port(root, current_task_label)
     ))
+
+def delayed_click_with_countdown(root, label, x, y, display_text):
+    """
+    最初に delayed_click を呼び出し、その後1秒ごとに表示を変更する関数。
+
+    :param root: Tkinterのrootウィンドウ
+    :param label: ラベルを更新するTkinterのラベル
+    :param x: クリックするX座標
+    :param y: クリックするY座標
+    :param display_text: 表示する基本のテキスト
+    """
+    # 最初に delayed_click を呼び出す
+    delayed_click(root, x, y)
+
+    def update_display(remaining_time):
+        if remaining_time > 0:
+            delayed_update(root, label, 0, f"「{display_text}」{remaining_time}秒後クリック")
+            root.after(1000, lambda: update_display(remaining_time - 1))
+        else:
+            delayed_update(root, label, 0, f"「{display_text}」クリック完了")
+
+    # 5秒からカウントダウンを開始
+    update_display(5)
+
+def delayed_drag_and_drop_with_countdown(root, label, start_x, start_y, end_x, end_y, display_text):
+    """
+    最初に delayed_drag_and_drop を呼び出し、その後1秒ごとに表示を変更する関数。
+
+    :param root: Tkinterのrootウィンドウ
+    :param label: ラベルを更新するTkinterのラベル
+    :param start_x: ドラッグ開始のX座標
+    :param start_y: ドラッグ開始のY座標
+    :param end_x: ドラッグ終了のX座標
+    :param end_y: ドラッグ終了のY座標
+    :param display_text: 表示する基本のテキスト
+    """
+    # 最初に delayed_drag_and_drop を呼び出す
+    delayed_drag_and_drop(root, start_x, start_y, end_x, end_y)
+
+    def update_display(remaining_time):
+        if remaining_time > 0:
+            delayed_update(root, label, 0, f"「{display_text}」{remaining_time}秒後ドラッグ＆ドロップ")
+            root.after(1000, lambda: update_display(remaining_time - 1))
+        else:
+            delayed_update(root, label, 0, f"「{display_text}」ドラッグ＆ドロップ完了")
+
+    # 5秒からカウントダウンを開始
+    update_display(5)
