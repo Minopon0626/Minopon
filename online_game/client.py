@@ -19,7 +19,7 @@ class ClientGUI:
         self.connect_button.grid(row=0, column=2, padx=10, pady=5)
 
         # ゲームログ用のスクロールテキストウィジェット
-        self.log_area = scrolledtext.ScrolledText(self.root, wrap=tk.WORD, width=50, height=20)
+        self.log_area = scrolledtext.ScrolledText(self.root, wrap=tk.WORD, width=50, height=10)
         self.log_area.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
         # プレイするカードのインデックス入力用ウィジェット
@@ -36,6 +36,11 @@ class ClientGUI:
         self.draw_button = tk.Button(self.root, text="カードを引く", command=self.draw_card)
         self.draw_button.grid(row=3, column=1, padx=10, pady=5)
         self.draw_button.config(state=tk.DISABLED)
+
+        # 場のカードを表示するラベル
+        tk.Label(self.root, text="今の場のカード:").grid(row=4, column=0, padx=10, pady=5)
+        self.current_card_label = tk.Label(self.root, text="なし", relief=tk.SUNKEN, width=20)
+        self.current_card_label.grid(row=4, column=1, padx=10, pady=5)
 
         self.client_socket = None
         self.receive_thread = None
@@ -87,6 +92,12 @@ class ClientGUI:
                         self.play_button.config(state=tk.DISABLED)
                         self.draw_button.config(state=tk.DISABLED)
                         self.is_my_turn = False
+
+                    # 場のカードを更新する場合
+                    if "最初の場のカードは" in message or "カード" in message:
+                        current_card = message.split()[-1]  # メッセージの最後の部分がカード情報と想定
+                        self.current_card_label.config(text=current_card)
+
                 else:
                     break
             except:

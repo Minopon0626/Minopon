@@ -89,7 +89,8 @@ class Server:
                                 self.top_card = card_to_play
                             player_hand.pop(card_index)
                             self.gui.update_player_list(self.players, self.current_turn)  # プレイヤーリストの更新
-                            client_socket.send(f"カード {card_to_play} を場に出しました".encode('utf-8'))
+                            self.broadcast(f"カード {card_to_play} を場に出しました", exclude_socket=None)
+                            self.broadcast(f"場のカードは {self.top_card} です", exclude_socket=None)
                             if not player_hand:
                                 client_socket.send(f"{player_name} が勝利しました！".encode('utf-8'))
                                 break
@@ -115,6 +116,16 @@ class Server:
                 self.client_sockets.remove(client_socket)
                 client_socket.close()
                 break
+
+    def broadcast(self, message, exclude_socket=None):
+        """すべてのクライアントにメッセージを送信（除外されたソケットを除く）"""
+        for client_socket in self.client_sockets:
+            if client_socket != exclude_socket:
+                try:
+                    client_socket.send(message.encode('utf-8'))
+                except:
+                    self.client_sockets.remove(client_socket)
+                    client_socket.close()
 
     def start_game(self):
         """ゲームを開始"""
