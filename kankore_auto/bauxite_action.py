@@ -4,94 +4,123 @@ def bauxite_click(root, current_task_label):
     """
     ボーキ処理開始。母港画面から編成画面へ移動し、旗艦を変更する。
     """
-    # 1. 最初にdelayed_clickを呼び出し、カウントダウンを表示
+
+    # 処理スタート。母港から編成を変える
     delayed_click_with_countdown(root, current_task_label, 300, 360, "母港から編成")
-
-    # 2. 5秒後に旗艦を変更する処理
+    # 旗艦を変更
     execute_after_delay(root, 5, delayed_drag_and_drop_with_countdown, root, current_task_label, 550, 410, 1060, 750, "旗艦を変更")
+    # 母港に戻る
+    # execute_after_delay(root, 10, return_to_home_port, root, current_task_label)
+    execute_after_delay(root, 10, delayed_click_with_countdown, root, current_task_label, 70, 220, "母港に戻る")
 
-    # 例: 10秒後に delayed_click_with_countdown 関数を実行
-    execute_after_delay(root, 10, return_to_home_port, root, current_task_label)
-
+    # 母港から出撃する
     execute_after_delay(root, 15, delayed_click_with_countdown, root, current_task_label, 300, 550, "母港から出撃")
-
+    # 出撃から出撃を選択する
     execute_after_delay(root, 20, delayed_click_with_countdown, root, current_task_label, 350, 490, "出撃から出撃")
-
+    # 南西海域を選択する
     execute_after_delay(root, 25, delayed_click_with_countdown, root, current_task_label, 510, 830, "南西海域の部分")
-
+    # 7-4を選択する
     execute_after_delay(root, 30, delayed_click_with_countdown, root, current_task_label, 1000, 700, "7-4")
-
+    # 7-4に出撃を決定
     execute_after_delay(root, 35, delayed_click_with_countdown, root, current_task_label, 1000, 820, "決定")
-
+    # 7-4に出撃開始
     execute_after_delay(root, 40, delayed_click_with_countdown, root, current_task_label, 1000, 820, "出撃開始")
 
+    # 7-4突入。start -> C
     execute_after_delay(root, 50, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
-    # 戦闘中
+    # Cマス戦闘開始
 
+    # Cマス戦闘完了
+    # Cマス追撃不要
     execute_after_delay(root, 90, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
-
+    # 戦闘評価更新
     execute_after_delay(root, 100, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
-
+    # 経験値取得
     execute_after_delay(root, 105, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
-
+    # 進撃を選択
     execute_after_delay(root, 110, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
 
+    # C -> D
     execute_after_delay(root, 115, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
-    # 戦闘中
+    # Dマス戦闘開始
 
+    # Dマス戦闘完了
+
+    # Dマス空襲マスに付き追撃選択不要
+    # 戦闘評価更新
     execute_after_delay(root, 160, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
-
+    # 経験値取得
     execute_after_delay(root, 165, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
-
+    # 進撃を選択
     execute_after_delay(root, 170, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
-
     # 進撃選択後自動移動
 
+    # D -> F
+
+    # F -> Jの能動選択
     execute_after_delay(root, 180, delayed_click_with_countdown, root, current_task_label, 710, 480, "能動選択[J]")
 
-    # 戦闘中 60s
+    # Jマス戦闘開始 60s
 
+    # Jマス戦闘完了
+    # Jマス追撃不要
     execute_after_delay(root, 240, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
-
+    # 戦闘評価更新
     execute_after_delay(root, 250, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
-
+    # 経験値取得
     execute_after_delay(root, 255, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
-
+    # 進撃を選択
     execute_after_delay(root, 260, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
 
+    # J -> K
     execute_after_delay(root, 265, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
-    # 戦闘中 45s
+    # Kマス戦闘開始 45s
 
+    # Kマス戦闘完了
+
+    # Kマス追撃不要
     execute_after_delay(root, 310, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
-
+    # 戦闘評価更新
     execute_after_delay(root, 320, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
-
+    # 経験値取得
     execute_after_delay(root, 325, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
-
+    # 進撃を選択
     execute_after_delay(root, 330, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
 
+    # K -> M
     execute_after_delay(root, 335, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
-    # 戦闘中 45s
+    # Mマス戦闘開始 45s
 
+    # Mマス戦闘完了
+    # Mマス追撃不要
     execute_after_delay(root, 380, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
-
+    # 戦闘評価更新
     execute_after_delay(root, 390, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
-
+    # 経験値取得
     execute_after_delay(root, 395, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
-
+    # 進撃を選択
     execute_after_delay(root, 400, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
 
+    # M -> O(goal)
     execute_after_delay(root, 405, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
     # 報酬受け取り 20s
 
     execute_after_delay(root, 425, delayed_click_with_countdown, root, current_task_label, 1000, 200, "報酬受取")
 
-    execute_after_delay(root, 430, supply_fleets, root, current_task_label)
+    # 艦隊補給
+    # 母港 -> 補給
+    execute_after_delay(root, 430, delayed_click_with_countdown, root, current_task_label, 120, 490, "母港から補給")
+
+    # 第一艦隊補給
+    execute_after_delay(root, 435, delayed_click_with_countdown, root, current_task_label, 180, 350, "艦隊補給")
+
+    # 補給から母港に戻る
+    execute_after_delay(root, 440, delayed_click_with_countdown, root, current_task_label, 70, 220, "母港に戻る")
 
 def bauxite_click_6seki(root, current_task_label):
     """
