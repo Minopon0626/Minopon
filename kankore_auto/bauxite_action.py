@@ -97,30 +97,30 @@ def bauxite_click(root, current_task_label):
 
     # Mマス戦闘完了
     # Mマス追撃不要
-    execute_after_delay(root, 380, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
+    execute_after_delay(root, 390, delayed_click_with_countdown, root, current_task_label, 430, 520, "追撃せず")
     # 戦闘評価更新
-    execute_after_delay(root, 390, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
+    execute_after_delay(root, 400, delayed_click_with_countdown, root, current_task_label, 1000, 200, "戦闘評価更新")
     # 経験値取得
-    execute_after_delay(root, 395, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
+    execute_after_delay(root, 405, delayed_click_with_countdown, root, current_task_label, 1000, 200, "経験値取得")
     # 進撃を選択
-    execute_after_delay(root, 400, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
+    execute_after_delay(root, 410, delayed_click_with_countdown, root, current_task_label, 430, 520, "進撃")
 
     # M -> O(goal)
-    execute_after_delay(root, 405, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
+    execute_after_delay(root, 415, delayed_click_with_countdown, root, current_task_label, 1000, 200, "羅針盤")
 
     # 報酬受け取り 20s
 
-    execute_after_delay(root, 425, delayed_click_with_countdown, root, current_task_label, 1000, 200, "報酬受取")
+    execute_after_delay(root, 435, delayed_click_with_countdown, root, current_task_label, 1000, 200, "報酬受取")
 
     # 艦隊補給
     # 母港 -> 補給
-    execute_after_delay(root, 430, delayed_click_with_countdown, root, current_task_label, 120, 490, "母港から補給")
+    execute_after_delay(root, 440, delayed_click_with_countdown, root, current_task_label, 120, 490, "母港から補給")
 
     # 第一艦隊補給
-    execute_after_delay(root, 435, delayed_click_with_countdown, root, current_task_label, 180, 350, "艦隊補給")
+    execute_after_delay(root, 445, delayed_click_with_countdown, root, current_task_label, 180, 350, "艦隊補給")
 
     # 補給から母港に戻る
-    execute_after_delay(root, 440, delayed_click_with_countdown, root, current_task_label, 70, 220, "母港に戻る")
+    execute_after_delay(root, 450, delayed_click_with_countdown, root, current_task_label, 70, 220, "母港に戻る")
 
 def bauxite_click_6seki(root, current_task_label):
     """

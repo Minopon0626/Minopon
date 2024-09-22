@@ -35,8 +35,8 @@ def start_bauxite_cycle(root, label, current_task_label):
         # ボーキ処理を実行
         bauxite_click(root, current_task_label)
 
-        # 次の繰り返しを450秒後に設定
-        bauxite_cycle_timer = root.after(450000, repeat_bauxite_click)
+        # 次の繰り返しを460秒後に設定
+        bauxite_cycle_timer = root.after(460000, repeat_bauxite_click)
 
     # 最初の繰り返しを設定
     repeat_bauxite_click()
